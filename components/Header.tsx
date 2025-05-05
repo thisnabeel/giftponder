@@ -1,54 +1,31 @@
-import React from "react";
-import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
+import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
+import { NextResponse } from "next/server";
+import React from "react";
 
 const Header: React.FC = () => {
+  const { data: session } = useSession();
   const router = useRouter();
-  const isActive: (pathname: string) => boolean = (pathname) =>
-    router.pathname === pathname;
-
-  let left = (
-    <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
-      <style jsx>{`
-        .bold {
-          font-weight: bold;
-        }
-
-        a {
-          text-decoration: none;
-          color: #000;
-          display: inline-block;
-        }
-
-        .left a[data-active="true"] {
-          color: gray;
-        }
-
-        a + a {
-          margin-left: 1rem;
-        }
-      `}</style>
-    </div>
-  );
-
-  let right = null;
 
   return (
     <nav>
-      {left}
-      {right}
-      <style jsx>{`
-        nav {
-          display: flex;
-          padding: 2rem;
-          align-items: center;
-        }
-      `}</style>
+      {session && (
+        <div className="left m-4">
+          <button
+            className="bold btn btn-outline-primary"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+          >
+            Sign Out
+          </button>
+          <button
+            className="bold btn btn-outline-success "
+            onClick={() => router.push("/preview/gift-newsletter")}
+          >
+            Newsletter
+          </button>
+        </div>
+      )}
     </nav>
   );
 };

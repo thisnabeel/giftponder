@@ -1,9 +1,17 @@
-import { AppProps } from "next/app";
+// pages/_app.tsx
+import { SessionProvider } from "next-auth/react";
+import type { AppProps } from "next/app";
+import "bootstrap/dist/css/bootstrap.css";
+import Layout from "../components/Layout";
 
-const App = ({ Component, pageProps }: AppProps) => {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <Component {...pageProps} />
+    <SessionProvider session={session}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </SessionProvider>
   );
-};
+}
 
-export default App;
+export default MyApp;
