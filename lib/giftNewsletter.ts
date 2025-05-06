@@ -43,6 +43,10 @@ function formatTraits(traits: { type: string; description: string }[]) {
     .join("; ");
 }
 
+function formatDate(date: Date): string {
+  return format(date, "MMMM d, yyyy");
+}
+
 export async function createGiftNewsletter(
   userId: string
 ): Promise<{ html: string; names: string[] }> {
@@ -56,6 +60,38 @@ export async function createGiftNewsletter(
   }
 
   const names = upcoming.map((d) => d.person.name);
+
+  // Create table of upcoming special days
+  const tableRows = upcoming
+    .map((day) => {
+      const emoji = getEmoji(day.title);
+      return `
+      <tr>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${day.person.name}</td>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${emoji} ${day.title}</td>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${formatDate(day.date)}</td>
+      </tr>
+    `;
+    })
+    .join("");
+
+  const upcomingDaysTable = `
+    <div style="margin-bottom: 30px;">
+      <h2 style="color:#333; font-size: 20px; margin-bottom: 15px;">Upcoming Special Days</h2>
+      <table style="width: 100%; border-collapse: collapse; font-size: 15px;">
+        <thead>
+          <tr style="background-color: #f8f8f8;">
+            <th style="text-align: left; padding: 10px; border-bottom: 2px solid #ddd;">Person</th>
+            <th style="text-align: left; padding: 10px; border-bottom: 2px solid #ddd;">Occasion</th>
+            <th style="text-align: left; padding: 10px; border-bottom: 2px solid #ddd;">Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${tableRows}
+        </tbody>
+      </table>
+    </div>
+  `;
 
   // Group by title
   const groupedByOccasion: Record<string, typeof upcoming> = {};
@@ -96,7 +132,9 @@ export async function createGiftNewsletter(
   );
 
   return {
-    html: wrapInBeautifulEmail(sections.join("<hr style='margin: 40px 0;' />")),
+    html: wrapInBeautifulEmail(
+      upcomingDaysTable + sections.join("<hr style='margin: 40px 0;' />")
+    ),
     names,
   };
 }
