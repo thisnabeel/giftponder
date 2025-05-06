@@ -3,6 +3,10 @@ import prisma from "../../../lib/prisma"; // adjust if needed
 import { createGiftNewsletter } from "../../../lib/giftNewsletter";
 import { Resend } from "resend";
 
+export const config = {
+  schedule: "0 9 * * *", // Runs every day at 9 AM
+};
+
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
 export default async function handler(
