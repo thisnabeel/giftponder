@@ -1,0 +1,9 @@
+{
+  "cron": [
+    {
+      "path": "/api/newsletters/send-all",
+      "schedule": "0 9 * * *",
+      "timezone": "America/Los_Angeles"
+    }
+  ]
+}
