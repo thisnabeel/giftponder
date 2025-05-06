@@ -34,7 +34,7 @@ Avoid any of the following previously rejected ideas:
 Make them creative, specific, and non-repetitive.
 `;
 
-    const result = await openai.chat.completions.create({
+    const result: any = await openai.chat.completions.create({
       model: "llama3-70b-8192",
       messages: [{ role: "user", content: prompt }],
     });

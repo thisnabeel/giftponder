@@ -1,9 +1,22 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+interface Person {
+  id: string;
+  name: string;
+  relationship: string;
+}
+
+interface SpecialDay {
+  id: string;
+  title: string;
+  date: string;
+  person: Person;
+}
+
 export default function UpcomingSpecialDayCalendar() {
-  const [specialDays, setSpecialDays] = useState([]);
-  const [persons, setPersons] = useState([]);
+  const [specialDays, setSpecialDays] = useState<SpecialDay[]>([]);
+  const [persons, setPersons] = useState<Person[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [formData, setFormData] = useState({ personId: "", title: "" });
@@ -31,7 +44,8 @@ export default function UpcomingSpecialDayCalendar() {
     const month = monthStart.getMonth();
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
-    const days = [];
+    // Define the array type explicitly to accept both Date and null
+    const days: (Date | null)[] = [];
 
     for (let i = 0; i < firstDay.getDay(); i++) {
       days.push(null);

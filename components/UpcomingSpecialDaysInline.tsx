@@ -8,8 +8,22 @@ interface Gift {
   done: boolean;
 }
 
+interface SpecialDay {
+  id: string;
+  title: string;
+  date: string;
+  person: Person;
+}
+
+interface Person {
+  id: String;
+  name: String;
+  userId: String;
+  specialDays: SpecialDay[];
+}
+
 export default function UpcomingSpecialDaysInline() {
-  const [specialDays, setSpecialDays] = useState([]);
+  const [specialDays, setSpecialDays] = useState<SpecialDay[]>([]);
   const [selectedDay, setSelectedDay] = useState<any>(null);
   const [gifts, setGifts] = useState<Gift[]>([]);
   const [newGift, setNewGift] = useState<Omit<Gift, "id">>({

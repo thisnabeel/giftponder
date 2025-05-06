@@ -5,17 +5,52 @@ import axios from "axios";
 export default function PersonDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  interface Person {
+    id: string;
+    name: string;
+    relationship: string;
+  }
 
-  const [person, setPerson] = useState(null);
-  const [traits, setTraits] = useState([]);
+  interface Person {
+    id: string;
+    name: string;
+    relationship: string;
+    loveCategories: LoveCategory[];
+  }
+
+  interface LoveCategory {
+    id: string;
+    name: string;
+    catalyst: string;
+    description: string;
+  }
+
+  interface Trait {
+    id: string;
+    person: Person;
+    personId: string;
+    description: string;
+    type: any;
+  }
+
+  interface SpecialDay {
+    id: string;
+    person: Person;
+    personId: string;
+    title: string;
+    date: Date;
+  }
+
+  const [person, setPerson] = useState<Person | null>(null);
+  const [traits, setTraits] = useState<Trait[] | []>([]);
   const [newTrait, setNewTrait] = useState({ type: "likes", description: "" });
-  const [specialDays, setSpecialDays] = useState([]);
+  const [specialDays, setSpecialDays] = useState<SpecialDay[] | []>([]);
   const [newSpecialDay, setNewSpecialDay] = useState({
     title: "",
     date: "",
   });
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<LoveCategory[]>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
 
   useEffect(() => {

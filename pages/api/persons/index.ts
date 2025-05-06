@@ -8,7 +8,17 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const session = await getServerSession(req, res, authOptions);
+
+  // Check if session exists before accessing user property
+  if (!session) {
+    return res.status(401).json({ error: "Unauthorized. Please sign in." });
+  }
+
   const userId = session.user.id;
+
+  if (!userId) {
+    return res.status(401).json({ error: "User ID not found." });
+  }
 
   if (!userId) {
     return res.status(401).json({ error: "User not found" });

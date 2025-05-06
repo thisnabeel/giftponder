@@ -4,6 +4,7 @@ import { create } from "zustand";
 type Person = {
   id: number;
   name: string;
+  relationship: string;
   // Add more fields as needed
 };
 
