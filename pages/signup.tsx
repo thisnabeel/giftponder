@@ -1,9 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 
 export default function Signup() {
   const [form, setForm] = useState({ email: "", name: "", password: "" });
+  useEffect(() => {
+    // Apply background when component mounts
+    document.body.style.backgroundImage = "url('/images/pattern3.png')";
+    document.body.style.backgroundSize = "700px"; // or "repeat" for tiled
+    document.body.style.backgroundRepeat = "repeat";
+    document.body.style.backgroundPosition = "center";
+
+    // Clean up when component unmounts
+    return () => {
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundSize = "";
+      document.body.style.backgroundRepeat = "";
+      document.body.style.backgroundPosition = "";
+    };
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,7 +37,8 @@ export default function Signup() {
         className="card shadow p-4"
         style={{ maxWidth: "400px", width: "100%" }}
       >
-        <h2 className="text-center mb-4 fw-bold text-success">GiftPonder</h2>
+        <h2 className="text-center mb-4 fw-bold text-primary">GiftPonder</h2>
+        <small className="text-center">Your Relationship Butler</small>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Name</label>

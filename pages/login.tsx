@@ -1,9 +1,25 @@
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
+
+  useEffect(() => {
+    // Apply background when component mounts
+    document.body.style.backgroundImage = "url('/images/pattern3.png')";
+    document.body.style.backgroundSize = "700px"; // or "repeat" for tiled
+    document.body.style.backgroundRepeat = "repeat";
+    document.body.style.backgroundPosition = "center";
+
+    // Clean up when component unmounts
+    return () => {
+      document.body.style.backgroundImage = "";
+      document.body.style.backgroundSize = "";
+      document.body.style.backgroundRepeat = "";
+      document.body.style.backgroundPosition = "";
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,6 +38,8 @@ export default function Login() {
         style={{ maxWidth: "400px", width: "100%" }}
       >
         <h2 className="text-center mb-4 fw-bold text-primary">GiftPonder</h2>
+        <small className="text-center">Your Relationship Butler</small>
+        <hr />
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Email</label>
