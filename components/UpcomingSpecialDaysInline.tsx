@@ -96,40 +96,76 @@ export default function UpcomingSpecialDaysInline() {
       prev.map((g) => (g.id === gift.id ? { ...g, done: res.data.done } : g))
     );
   };
-
   return (
     <div className="my-4">
       <h5 className="mb-2">🌟 Upcoming Special Days</h5>
-      {specialDays.length === 0 ? (
+      {specialDays.filter((day) => {
+        const now = new Date();
+        const today = new Date(
+          Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+        );
+
+        const dayObj = new Date(day.date);
+        const dayDate = new Date(
+          Date.UTC(
+            dayObj.getUTCFullYear(),
+            dayObj.getUTCMonth(),
+            dayObj.getUTCDate()
+          )
+        );
+        return dayDate.getTime() > today.getTime();
+      }).length === 0 ? (
         <div className="text-muted">No upcoming special days.</div>
       ) : (
         <div className="d-flex flex-wrap gap-2">
-          {specialDays.map((day) => {
-            const daysLeft = getDaysLeft(day.date);
-            const urgencyClass = getUrgencyClass(daysLeft);
-            const emoji = getEmoji(day.title);
+          {specialDays
+            .filter((day) => {
+              const now = new Date();
+              const today = new Date(
+                Date.UTC(
+                  now.getUTCFullYear(),
+                  now.getUTCMonth(),
+                  now.getUTCDate()
+                )
+              );
 
-            return (
-              <span
-                key={day.id}
-                className={`badge border rounded-pill px-3 py-2 d-flex flex-column align-items-start ${urgencyClass}`}
-                style={{
-                  minWidth: "160px",
-                  position: "relative",
-                  cursor: "pointer",
-                }}
-                title={`${daysLeft} day${daysLeft === 1 ? "" : "s"} left`}
-                onClick={() => openGiftModal(day)}
-              >
-                <strong>
-                  {emoji} {day.title}
-                </strong>
-                <small className="text-muted">
-                  {day.date.split("T")[0]} – {day.person.name}
-                </small>
-              </span>
-            );
-          })}
+              const dayObj = new Date(day.date);
+              const dayDate = new Date(
+                Date.UTC(
+                  dayObj.getUTCFullYear(),
+                  dayObj.getUTCMonth(),
+                  dayObj.getUTCDate()
+                )
+              );
+              console.log({ dayDate, today });
+              return dayDate.getTime() > today.getTime();
+            })
+            .map((day) => {
+              const daysLeft = getDaysLeft(day.date);
+              const urgencyClass = getUrgencyClass(daysLeft);
+              const emoji = getEmoji(day.title);
+
+              return (
+                <span
+                  key={day.id}
+                  className={`badge border rounded-pill px-3 py-2 d-flex flex-column align-items-start ${urgencyClass}`}
+                  style={{
+                    minWidth: "160px",
+                    position: "relative",
+                    cursor: "pointer",
+                  }}
+                  title={`${daysLeft} day${daysLeft === 1 ? "" : "s"} left`}
+                  onClick={() => openGiftModal(day)}
+                >
+                  <strong>
+                    {emoji} {day.title}
+                  </strong>
+                  <small className="text-muted">
+                    {day.date.split("T")[0]} – {day.person.name}
+                  </small>
+                </span>
+              );
+            })}
         </div>
       )}
 

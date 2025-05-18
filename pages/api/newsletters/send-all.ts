@@ -21,7 +21,7 @@ export default async function handler(
     const { html, names } = await createGiftNewsletter(user.id);
     const subject =
       names.length > 0
-        ? `🎁 Gift Ideas for ${names.join(", ")}`
+        ? `🎁 Days upcoming for ${names.join(", ")}`
         : "🎁 Your GiftPonder Newsletter";
 
     const emailRes = await resend.emails.send({

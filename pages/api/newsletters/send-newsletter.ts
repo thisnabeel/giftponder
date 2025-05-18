@@ -22,7 +22,7 @@ export default async function handler(
   const subjectNames = names.join(", ");
   const subject =
     names.length > 0
-      ? `🎁 Gift Ideas for ${subjectNames}`
+      ? `🎁 Days upcoming for ${subjectNames}`
       : "🎁 Your GiftPonder Newsletter";
 
   const result = await resend.emails.send({

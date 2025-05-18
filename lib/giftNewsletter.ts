@@ -1,12 +1,15 @@
 // lib/giftNewsletter.ts
 import { openai } from "./openai";
 import prisma from "./prisma";
-import { format } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 
 async function getUpcomingSpecialDays(userId: string) {
-  const today = new Date();
-  const future = new Date();
-  future.setDate(today.getDate() + 60); // Next 2 months
+  const now = new Date();
+  const today = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())
+  );
+  const future = new Date(today);
+  future.setUTCDate(today.getUTCDate() + 60); // Next 2 months in UTC
 
   const days = await prisma.specialDay.findMany({
     where: {
@@ -44,7 +47,7 @@ function formatTraits(traits: { type: string; description: string }[]) {
 }
 
 function formatDate(date: Date): string {
-  return format(date, "MMMM d, yyyy");
+  return formatInTimeZone(date, "UTC", "MMMM d, yyyy");
 }
 
 export async function createGiftNewsletter(
@@ -132,9 +135,7 @@ export async function createGiftNewsletter(
   );
 
   return {
-    html: wrapInBeautifulEmail(
-      upcomingDaysTable + sections.join("<hr style='margin: 40px 0;' />")
-    ),
+    html: wrapInBeautifulEmail(upcomingDaysTable),
     names,
   };
 }
@@ -167,13 +168,8 @@ function wrapInBeautifulEmail(bodyHtml: string): string {
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     ">
       <h1 style="text-align:center; color:#222; font-size: 24px; margin-bottom: 20px;">
-        🎁 GiftPonder – Personalized Gift Ideas
+        🎁 GiftPonder
       </h1>
-
-      <p style="font-size: 16px; line-height: 1.6;">
-        As the special occasions approach, we want to help you make a meaningful impact on your loved ones. 
-        Here are <strong>personalized gift recommendations</strong> tailored to their personality and needs:
-      </p>
 
       ${bodyHtml}
 
