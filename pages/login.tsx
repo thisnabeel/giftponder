@@ -32,9 +32,15 @@ export default function LoginOrSignup() {
         <h2 className="text-center mb-4 fw-bold">GiftPonder</h2>
         {!selectedForm && (
           <div className="intro text-center mb-4">
+            <div
+              className="d-inline-block px-3 py-2 mb-3 text-white bg-primary rounded-pill"
+              style={{ fontSize: "0.9rem" }}
+            >
+              New features <u>every week</u>
+            </div>
             <p className="text-start">
-              Daily reminders and tips for your relationships everyday in your
-              inbox
+              Daily reminders & tips for your relationships everyday in your
+              inbox.
             </p>
             <p className="fw-bold">Like This:</p>
             <img
