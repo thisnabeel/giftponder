@@ -77,16 +77,27 @@ export default function PeoplePage() {
             <Modal.Title>Email Verification Required</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            Please verify your email address to continue. Check your inbox for a
-            verification email.
+            <p>
+              To continue, please verify your email address. <br /> Check your
+              inbox for a verification email. <br />
+              If you don't see it, make sure to check your spam or junk folder.
+            </p>
             <button
-              className="btn btn-link mt-2"
+              className="btn btn-primary mt-2"
               onClick={async () => {
-                await axios.post("/api/auth/send-verification-email", {
-                  email: session?.user?.email,
-                  name: session?.user?.name,
-                });
-                alert("Verification email resent. Please check your inbox.");
+                try {
+                  await axios.post("/api/auth/send-verification-email", {
+                    email: session?.user?.email,
+                    name: session?.user?.name,
+                  });
+                  alert(
+                    "Verification email resent. Please check your inbox and spam folder."
+                  );
+                } catch (error) {
+                  alert(
+                    "Failed to resend verification email. Please try again."
+                  );
+                }
               }}
             >
               Resend Verification Email
