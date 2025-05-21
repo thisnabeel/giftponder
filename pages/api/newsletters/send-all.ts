@@ -25,7 +25,7 @@ export default async function handler(
         : "🎁 Your GiftPonder Newsletter";
 
     const emailRes = await resend.emails.send({
-      from: "giftponder@resend.dev",
+      from: "GiftPonder <donotreply@giftponder.com",
       to: user.email!,
       subject,
       html,
