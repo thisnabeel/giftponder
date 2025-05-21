@@ -33,7 +33,7 @@ export default function LoginOrSignup() {
         {!selectedForm && (
           <div className="intro text-center mb-4">
             <p className="text-start">
-              Get reminders and tips for your relationships everyday in your
+              Daily reminders and tips for your relationships everyday in your
               inbox
             </p>
             <p className="fw-bold">Like This:</p>
