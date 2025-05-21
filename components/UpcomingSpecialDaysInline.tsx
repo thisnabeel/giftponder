@@ -148,20 +148,59 @@ export default function UpcomingSpecialDaysInline() {
               return (
                 <span
                   key={day.id}
-                  className={`badge border rounded-pill px-3 py-2 d-flex flex-column align-items-start ${urgencyClass}`}
+                  className={`badge border rounded-pill px-3 py-2 d-flex flex-column align-items-center ${urgencyClass}`}
                   style={{
-                    minWidth: "160px",
+                    minWidth: "180px",
                     position: "relative",
                     cursor: "pointer",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    transition: "transform 0.2s, box-shadow 0.2s",
                   }}
                   title={`${daysLeft} day${daysLeft === 1 ? "" : "s"} left`}
                   onClick={() => openGiftModal(day)}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "scale(1.05)";
+                    e.currentTarget.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.15)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "scale(1)";
+                    e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                  }}
                 >
-                  <strong>
-                    {emoji} {day.title}
+                  <strong
+                    style={{
+                      backgroundColor: "#f8f9fa",
+                      color: "#212529",
+                      padding: "4px 8px",
+                      borderRadius: "6px",
+                      marginBottom: "8px",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {day.person.name}
                   </strong>
-                  <small className="text-muted">
-                    {day.date.split("T")[0]} – {day.person.name}
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      textAlign: "center",
+                      display: "block",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {emoji} {day.title}
+                  </span>
+                  <small
+                    className=""
+                    style={{
+                      backgroundColor: "#343a40",
+                      color: "#f8f9fa",
+                      padding: "4px 8px",
+                      borderRadius: "6px",
+                      marginTop: "8px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    {day.date.split("T")[0]}
                   </small>
                 </span>
               );

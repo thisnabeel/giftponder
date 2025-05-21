@@ -24,7 +24,13 @@ export const authOptions: AuthOptions = {
         );
         if (!isValid) throw new Error("Invalid password");
 
-        return { id: user.id, name: user.name, email: user.email };
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          admin: user.admin,
+          emailVerified: user.emailVerified,
+        };
       },
     }),
   ],
@@ -39,12 +45,16 @@ export const authOptions: AuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.admin = user.admin; // Include admin in the token
+        token.emailVerified = user.emailVerified;
       }
       return token;
     },
     async session({ session, token }) {
       if (token?.id) {
         session.user.id = token.id;
+        session.user.admin = Boolean(token.admin); // Ensure admin is a boolean
+        session.user.emailVerified = Boolean(token.emailVerified); // Ensure emailVerified is a boolean
       }
       return session;
     },

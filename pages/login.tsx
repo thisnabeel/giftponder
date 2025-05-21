@@ -84,19 +84,30 @@ export default function LoginOrSignup() {
 
 function LoginForm() {
   const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await signIn("credentials", {
-      redirect: true,
+    setError(false); // Reset error state
+
+    const result = await signIn("credentials", {
+      redirect: false, // Prevent redirection
       email: form.email,
       password: form.password,
-      callbackUrl: "/dashboard",
     });
+
+    if (result?.error) {
+      setError(true); // Trigger error state
+    } else {
+      window.location.href = "/dashboard"; // Redirect manually on success
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className={error ? "vibrate" : ""} // Add vibrate class on error
+    >
       <div className="mb-3">
         <label className="form-label">Email</label>
         <input
@@ -120,6 +131,29 @@ function LoginForm() {
       <button type="submit" className="btn btn-primary w-100">
         Log In
       </button>
+      <style jsx>{`
+        .vibrate {
+          animation: vibrate 0.3s;
+        }
+
+        @keyframes vibrate {
+          0% {
+            transform: translateX(0);
+          }
+          25% {
+            transform: translateX(-5px);
+          }
+          50% {
+            transform: translateX(5px);
+          }
+          75% {
+            transform: translateX(-5px);
+          }
+          100% {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
     </form>
   );
 }
@@ -132,6 +166,28 @@ function SignupForm() {
     try {
       const res = await axios.post("/api/auth/signup", form);
       alert(res.data?.message || "Signup successful");
+
+      // Automatically log the user in after successful signup
+      const loginResult = await signIn("credentials", {
+        redirect: false,
+        email: form.email,
+        password: form.password,
+      });
+
+      if (loginResult?.error) {
+        console.error("Login after signup failed:", loginResult.error);
+        alert("Signup successful, but login failed. Please log in manually.");
+      } else {
+        // Create a default Person for the new user before redirecting
+        await axios.post("/api/persons", {
+          name: "Me",
+          relationship: "myself",
+          userId: res.data.userId, // Assuming the API returns the new user's ID
+        });
+
+        // Redirect to dashboard after creating the person
+        window.location.href = "/dashboard"; // Redirect to dashboard on successful login
+      }
     } catch (err) {
       console.error("Signup failed:", err.response?.data);
       alert(err.response?.data?.error || "Signup failed");

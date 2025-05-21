@@ -7,6 +7,8 @@ import React from "react";
 const Header: React.FC = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  console.log({ session });
+  const isAdmin = session?.user?.admin; // Assuming 'admin' is part of the user object
 
   return (
     <nav>
@@ -18,12 +20,15 @@ const Header: React.FC = () => {
           >
             Sign Out
           </button>
-          <button
-            className="bold btn btn-outline-success "
-            onClick={() => router.push("/preview/gift-newsletter")}
-          >
-            Newsletter
-          </button>
+
+          {isAdmin && (
+            <button
+              className="bold btn btn-outline-success"
+              onClick={() => router.push("/preview/gift-newsletter")}
+            >
+              Newsletter
+            </button>
+          )}
         </div>
       )}
     </nav>

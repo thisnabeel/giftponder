@@ -9,24 +9,26 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  persons   Person[]
+  id            String   @id @default(uuid())
+  email         String   @unique
+  name          String
+  password      String
+  emailVerified Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  persons       Person[]
+  admin         Boolean  @default(false)
 }
 
 model Person {
   id                String               @id @default(uuid())
   name              String
   relationship      String
-  user              User                 @relation(fields: [userId], references: [id])
   userId            String
+  user              User                 @relation(fields: [userId], references: [id])
   loveTypes         PersonLoveCategory[]
-  specialDays       SpecialDay[]
   rejectedGiftIdeas RejectedGiftIdea[]
+  specialDays       SpecialDay[]
   traits            Trait[]
 }
 
@@ -35,9 +37,9 @@ model Gift {
   title        String
   website      String
   done         Boolean    @default(false)
-  specialDay   SpecialDay @relation(fields: [specialDayId], references: [id])
   specialDayId String
   createdAt    DateTime   @default(now())
+  specialDay   SpecialDay @relation(fields: [specialDayId], references: [id])
 }
 
 model LoveCategory {
@@ -50,37 +52,36 @@ model LoveCategory {
 
 model PersonLoveCategory {
   id             String       @id @default(uuid())
-  person         Person       @relation(fields: [personId], references: [id])
   personId       String
-  loveCategory   LoveCategory @relation(fields: [loveCategoryId], references: [id])
   loveCategoryId String
   note           String?
+  loveCategory   LoveCategory @relation(fields: [loveCategoryId], references: [id])
+  person         Person       @relation(fields: [personId], references: [id])
 }
 
 model SpecialDay {
   id       String   @id @default(uuid())
-  person   Person   @relation(fields: [personId], references: [id])
   personId String
   title    String
   date     DateTime
-
-  gifts Gift[] // ✅ This line is the fix
+  gifts    Gift[]
+  person   Person   @relation(fields: [personId], references: [id])
 }
 
 model RejectedGiftIdea {
   id        String   @id @default(uuid())
-  person    Person   @relation(fields: [personId], references: [id])
   personId  String
-  content   String // The rejected idea's text
+  content   String
   createdAt DateTime @default(now())
+  person    Person   @relation(fields: [personId], references: [id])
 }
 
 model Trait {
   id          String    @id @default(uuid())
-  person      Person    @relation(fields: [personId], references: [id])
   personId    String
   type        TraitType
   description String
+  person      Person    @relation(fields: [personId], references: [id])
 }
 
 enum TraitType {

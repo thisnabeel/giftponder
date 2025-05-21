@@ -21,6 +21,7 @@ export default function UpcomingSpecialDayCalendar() {
   const [selectedDate, setSelectedDate] = useState("");
   const [formData, setFormData] = useState({ personId: "", title: "" });
   const [selectedMonthOffset, setSelectedMonthOffset] = useState(0);
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
   const today = new Date();
 
@@ -66,6 +67,11 @@ export default function UpcomingSpecialDayCalendar() {
     setShowModal(true);
   };
 
+  const handleButtonClick = (label: string) => {
+    setActiveButton(label);
+    setFormData({ ...formData, title: label });
+  };
+
   const handleSubmit = async () => {
     if (!formData.personId || !formData.title) return;
 
@@ -85,6 +91,10 @@ export default function UpcomingSpecialDayCalendar() {
     month: "long",
     year: "numeric",
   });
+
+  const isSaveEnabled =
+    (activeButton !== null || formData.title.length > 2) &&
+    formData.personId !== "";
 
   return (
     <div className="container mt-4">
@@ -192,10 +202,12 @@ export default function UpcomingSpecialDayCalendar() {
                     .map((label) => (
                       <button
                         key={label}
-                        className="btn btn-outline-primary btn-sm"
-                        onClick={() =>
-                          setFormData({ ...formData, title: label })
-                        }
+                        className={`btn btn-sm ${
+                          activeButton === label
+                            ? "btn-primary"
+                            : "btn-outline-primary"
+                        }`}
+                        onClick={() => handleButtonClick(label)}
                       >
                         {label}
                       </button>
@@ -226,7 +238,11 @@ export default function UpcomingSpecialDayCalendar() {
                 >
                   Cancel
                 </button>
-                <button className="btn btn-primary" onClick={handleSubmit}>
+                <button
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                  disabled={!isSaveEnabled}
+                >
                   Save
                 </button>
               </div>

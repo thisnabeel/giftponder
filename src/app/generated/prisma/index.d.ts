@@ -1558,15 +1558,15 @@ export namespace Prisma {
 
   export type PersonCountOutputType = {
     loveTypes: number
-    specialDays: number
     rejectedGiftIdeas: number
+    specialDays: number
     traits: number
   }
 
   export type PersonCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     loveTypes?: boolean | PersonCountOutputTypeCountLoveTypesArgs
-    specialDays?: boolean | PersonCountOutputTypeCountSpecialDaysArgs
     rejectedGiftIdeas?: boolean | PersonCountOutputTypeCountRejectedGiftIdeasArgs
+    specialDays?: boolean | PersonCountOutputTypeCountSpecialDaysArgs
     traits?: boolean | PersonCountOutputTypeCountTraitsArgs
   }
 
@@ -1591,15 +1591,15 @@ export namespace Prisma {
   /**
    * PersonCountOutputType without action
    */
-  export type PersonCountOutputTypeCountSpecialDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SpecialDayWhereInput
+  export type PersonCountOutputTypeCountRejectedGiftIdeasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RejectedGiftIdeaWhereInput
   }
 
   /**
    * PersonCountOutputType without action
    */
-  export type PersonCountOutputTypeCountRejectedGiftIdeasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RejectedGiftIdeaWhereInput
+  export type PersonCountOutputTypeCountSpecialDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpecialDayWhereInput
   }
 
   /**
@@ -1691,8 +1691,10 @@ export namespace Prisma {
     email: string | null
     name: string | null
     password: string | null
+    emailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    admin: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1700,8 +1702,10 @@ export namespace Prisma {
     email: string | null
     name: string | null
     password: string | null
+    emailVerified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    admin: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1709,8 +1713,10 @@ export namespace Prisma {
     email: number
     name: number
     password: number
+    emailVerified: number
     createdAt: number
     updatedAt: number
+    admin: number
     _all: number
   }
 
@@ -1720,8 +1726,10 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
+    emailVerified?: true
     createdAt?: true
     updatedAt?: true
+    admin?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1729,8 +1737,10 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
+    emailVerified?: true
     createdAt?: true
     updatedAt?: true
+    admin?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1738,8 +1748,10 @@ export namespace Prisma {
     email?: true
     name?: true
     password?: true
+    emailVerified?: true
     createdAt?: true
     updatedAt?: true
+    admin?: true
     _all?: true
   }
 
@@ -1820,8 +1832,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified: boolean
     createdAt: Date
     updatedAt: Date
+    admin: boolean
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1846,8 +1860,10 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
+    emailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    admin?: boolean
     persons?: boolean | User$personsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
@@ -1857,8 +1873,10 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
+    emailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    admin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1866,8 +1884,10 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
+    emailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    admin?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1875,11 +1895,13 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     password?: boolean
+    emailVerified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    admin?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "emailVerified" | "createdAt" | "updatedAt" | "admin", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     persons?: boolean | User$personsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1897,8 +1919,10 @@ export namespace Prisma {
       email: string
       name: string
       password: string
+      emailVerified: boolean
       createdAt: Date
       updatedAt: Date
+      admin: boolean
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2327,8 +2351,10 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
+    readonly emailVerified: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly admin: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -2917,8 +2943,8 @@ export namespace Prisma {
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     loveTypes?: boolean | Person$loveTypesArgs<ExtArgs>
-    specialDays?: boolean | Person$specialDaysArgs<ExtArgs>
     rejectedGiftIdeas?: boolean | Person$rejectedGiftIdeasArgs<ExtArgs>
+    specialDays?: boolean | Person$specialDaysArgs<ExtArgs>
     traits?: boolean | Person$traitsArgs<ExtArgs>
     _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["person"]>
@@ -2950,8 +2976,8 @@ export namespace Prisma {
   export type PersonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     loveTypes?: boolean | Person$loveTypesArgs<ExtArgs>
-    specialDays?: boolean | Person$specialDaysArgs<ExtArgs>
     rejectedGiftIdeas?: boolean | Person$rejectedGiftIdeasArgs<ExtArgs>
+    specialDays?: boolean | Person$specialDaysArgs<ExtArgs>
     traits?: boolean | Person$traitsArgs<ExtArgs>
     _count?: boolean | PersonCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -2967,8 +2993,8 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       loveTypes: Prisma.$PersonLoveCategoryPayload<ExtArgs>[]
-      specialDays: Prisma.$SpecialDayPayload<ExtArgs>[]
       rejectedGiftIdeas: Prisma.$RejectedGiftIdeaPayload<ExtArgs>[]
+      specialDays: Prisma.$SpecialDayPayload<ExtArgs>[]
       traits: Prisma.$TraitPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -3372,8 +3398,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     loveTypes<T extends Person$loveTypesArgs<ExtArgs> = {}>(args?: Subset<T, Person$loveTypesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonLoveCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    specialDays<T extends Person$specialDaysArgs<ExtArgs> = {}>(args?: Subset<T, Person$specialDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecialDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     rejectedGiftIdeas<T extends Person$rejectedGiftIdeasArgs<ExtArgs> = {}>(args?: Subset<T, Person$rejectedGiftIdeasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RejectedGiftIdeaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    specialDays<T extends Person$specialDaysArgs<ExtArgs> = {}>(args?: Subset<T, Person$specialDaysArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpecialDayPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     traits<T extends Person$traitsArgs<ExtArgs> = {}>(args?: Subset<T, Person$traitsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TraitPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3828,30 +3854,6 @@ export namespace Prisma {
   }
 
   /**
-   * Person.specialDays
-   */
-  export type Person$specialDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the SpecialDay
-     */
-    select?: SpecialDaySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the SpecialDay
-     */
-    omit?: SpecialDayOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SpecialDayInclude<ExtArgs> | null
-    where?: SpecialDayWhereInput
-    orderBy?: SpecialDayOrderByWithRelationInput | SpecialDayOrderByWithRelationInput[]
-    cursor?: SpecialDayWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SpecialDayScalarFieldEnum | SpecialDayScalarFieldEnum[]
-  }
-
-  /**
    * Person.rejectedGiftIdeas
    */
   export type Person$rejectedGiftIdeasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3873,6 +3875,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: RejectedGiftIdeaScalarFieldEnum | RejectedGiftIdeaScalarFieldEnum[]
+  }
+
+  /**
+   * Person.specialDays
+   */
+  export type Person$specialDaysArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpecialDay
+     */
+    select?: SpecialDaySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpecialDay
+     */
+    omit?: SpecialDayOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpecialDayInclude<ExtArgs> | null
+    where?: SpecialDayWhereInput
+    orderBy?: SpecialDayOrderByWithRelationInput | SpecialDayOrderByWithRelationInput[]
+    cursor?: SpecialDayWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SpecialDayScalarFieldEnum | SpecialDayScalarFieldEnum[]
   }
 
   /**
@@ -6202,8 +6228,8 @@ export namespace Prisma {
     personId?: boolean
     loveCategoryId?: boolean
     note?: boolean
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["personLoveCategory"]>
 
   export type PersonLoveCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6211,8 +6237,8 @@ export namespace Prisma {
     personId?: boolean
     loveCategoryId?: boolean
     note?: boolean
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["personLoveCategory"]>
 
   export type PersonLoveCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6220,8 +6246,8 @@ export namespace Prisma {
     personId?: boolean
     loveCategoryId?: boolean
     note?: boolean
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["personLoveCategory"]>
 
   export type PersonLoveCategorySelectScalar = {
@@ -6233,23 +6259,23 @@ export namespace Prisma {
 
   export type PersonLoveCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "personId" | "loveCategoryId" | "note", ExtArgs["result"]["personLoveCategory"]>
   export type PersonLoveCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }
   export type PersonLoveCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }
   export type PersonLoveCategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     loveCategory?: boolean | LoveCategoryDefaultArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
   }
 
   export type $PersonLoveCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PersonLoveCategory"
     objects: {
-      person: Prisma.$PersonPayload<ExtArgs>
       loveCategory: Prisma.$LoveCategoryPayload<ExtArgs>
+      person: Prisma.$PersonPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6650,8 +6676,8 @@ export namespace Prisma {
    */
   export interface Prisma__PersonLoveCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    person<T extends PersonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PersonDefaultArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     loveCategory<T extends LoveCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, LoveCategoryDefaultArgs<ExtArgs>>): Prisma__LoveCategoryClient<$Result.GetResult<Prisma.$LoveCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    person<T extends PersonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PersonDefaultArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7255,8 +7281,8 @@ export namespace Prisma {
     personId?: boolean
     title?: boolean
     date?: boolean
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     gifts?: boolean | SpecialDay$giftsArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
     _count?: boolean | SpecialDayCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["specialDay"]>
 
@@ -7285,8 +7311,8 @@ export namespace Prisma {
 
   export type SpecialDayOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "personId" | "title" | "date", ExtArgs["result"]["specialDay"]>
   export type SpecialDayInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    person?: boolean | PersonDefaultArgs<ExtArgs>
     gifts?: boolean | SpecialDay$giftsArgs<ExtArgs>
+    person?: boolean | PersonDefaultArgs<ExtArgs>
     _count?: boolean | SpecialDayCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SpecialDayIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7299,8 +7325,8 @@ export namespace Prisma {
   export type $SpecialDayPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "SpecialDay"
     objects: {
-      person: Prisma.$PersonPayload<ExtArgs>
       gifts: Prisma.$GiftPayload<ExtArgs>[]
+      person: Prisma.$PersonPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7701,8 +7727,8 @@ export namespace Prisma {
    */
   export interface Prisma__SpecialDayClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    person<T extends PersonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PersonDefaultArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     gifts<T extends SpecialDay$giftsArgs<ExtArgs> = {}>(args?: Subset<T, SpecialDay$giftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    person<T extends PersonDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PersonDefaultArgs<ExtArgs>>): Prisma__PersonClient<$Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10283,8 +10309,10 @@ export namespace Prisma {
     email: 'email',
     name: 'name',
     password: 'password',
+    emailVerified: 'emailVerified',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    admin: 'admin'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -10406,6 +10434,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -10416,13 +10451,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -10465,8 +10493,10 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    emailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    admin?: BoolFilter<"User"> | boolean
     persons?: PersonListRelationFilter
   }
 
@@ -10475,8 +10505,10 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    emailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    admin?: SortOrder
     persons?: PersonOrderByRelationAggregateInput
   }
 
@@ -10488,8 +10520,10 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
+    emailVerified?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    admin?: BoolFilter<"User"> | boolean
     persons?: PersonListRelationFilter
   }, "id" | "email">
 
@@ -10498,8 +10532,10 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    emailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    admin?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -10513,8 +10549,10 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
+    emailVerified?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    admin?: BoolWithAggregatesFilter<"User"> | boolean
   }
 
   export type PersonWhereInput = {
@@ -10527,8 +10565,8 @@ export namespace Prisma {
     userId?: StringFilter<"Person"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     loveTypes?: PersonLoveCategoryListRelationFilter
-    specialDays?: SpecialDayListRelationFilter
     rejectedGiftIdeas?: RejectedGiftIdeaListRelationFilter
+    specialDays?: SpecialDayListRelationFilter
     traits?: TraitListRelationFilter
   }
 
@@ -10539,8 +10577,8 @@ export namespace Prisma {
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
     loveTypes?: PersonLoveCategoryOrderByRelationAggregateInput
-    specialDays?: SpecialDayOrderByRelationAggregateInput
     rejectedGiftIdeas?: RejectedGiftIdeaOrderByRelationAggregateInput
+    specialDays?: SpecialDayOrderByRelationAggregateInput
     traits?: TraitOrderByRelationAggregateInput
   }
 
@@ -10554,8 +10592,8 @@ export namespace Prisma {
     userId?: StringFilter<"Person"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     loveTypes?: PersonLoveCategoryListRelationFilter
-    specialDays?: SpecialDayListRelationFilter
     rejectedGiftIdeas?: RejectedGiftIdeaListRelationFilter
+    specialDays?: SpecialDayListRelationFilter
     traits?: TraitListRelationFilter
   }, "id">
 
@@ -10697,8 +10735,8 @@ export namespace Prisma {
     personId?: StringFilter<"PersonLoveCategory"> | string
     loveCategoryId?: StringFilter<"PersonLoveCategory"> | string
     note?: StringNullableFilter<"PersonLoveCategory"> | string | null
-    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
     loveCategory?: XOR<LoveCategoryScalarRelationFilter, LoveCategoryWhereInput>
+    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
   }
 
   export type PersonLoveCategoryOrderByWithRelationInput = {
@@ -10706,8 +10744,8 @@ export namespace Prisma {
     personId?: SortOrder
     loveCategoryId?: SortOrder
     note?: SortOrderInput | SortOrder
-    person?: PersonOrderByWithRelationInput
     loveCategory?: LoveCategoryOrderByWithRelationInput
+    person?: PersonOrderByWithRelationInput
   }
 
   export type PersonLoveCategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -10718,8 +10756,8 @@ export namespace Prisma {
     personId?: StringFilter<"PersonLoveCategory"> | string
     loveCategoryId?: StringFilter<"PersonLoveCategory"> | string
     note?: StringNullableFilter<"PersonLoveCategory"> | string | null
-    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
     loveCategory?: XOR<LoveCategoryScalarRelationFilter, LoveCategoryWhereInput>
+    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
   }, "id">
 
   export type PersonLoveCategoryOrderByWithAggregationInput = {
@@ -10750,8 +10788,8 @@ export namespace Prisma {
     personId?: StringFilter<"SpecialDay"> | string
     title?: StringFilter<"SpecialDay"> | string
     date?: DateTimeFilter<"SpecialDay"> | Date | string
-    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
     gifts?: GiftListRelationFilter
+    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
   }
 
   export type SpecialDayOrderByWithRelationInput = {
@@ -10759,8 +10797,8 @@ export namespace Prisma {
     personId?: SortOrder
     title?: SortOrder
     date?: SortOrder
-    person?: PersonOrderByWithRelationInput
     gifts?: GiftOrderByRelationAggregateInput
+    person?: PersonOrderByWithRelationInput
   }
 
   export type SpecialDayWhereUniqueInput = Prisma.AtLeast<{
@@ -10771,8 +10809,8 @@ export namespace Prisma {
     personId?: StringFilter<"SpecialDay"> | string
     title?: StringFilter<"SpecialDay"> | string
     date?: DateTimeFilter<"SpecialDay"> | Date | string
-    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
     gifts?: GiftListRelationFilter
+    person?: XOR<PersonScalarRelationFilter, PersonWhereInput>
   }, "id">
 
   export type SpecialDayOrderByWithAggregationInput = {
@@ -10900,8 +10938,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: boolean
     persons?: PersonCreateNestedManyWithoutUserInput
   }
 
@@ -10910,8 +10950,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: boolean
     persons?: PersonUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -10920,8 +10962,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
     persons?: PersonUpdateManyWithoutUserNestedInput
   }
 
@@ -10930,8 +10974,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
     persons?: PersonUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -10940,8 +10986,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: boolean
   }
 
   export type UserUpdateManyMutationInput = {
@@ -10949,8 +10997,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -10958,8 +11008,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PersonCreateInput = {
@@ -10968,8 +11020,8 @@ export namespace Prisma {
     relationship: string
     user: UserCreateNestedOneWithoutPersonsInput
     loveTypes?: PersonLoveCategoryCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
     traits?: TraitCreateNestedManyWithoutPersonInput
   }
 
@@ -10979,8 +11031,8 @@ export namespace Prisma {
     relationship: string
     userId: string
     loveTypes?: PersonLoveCategoryUncheckedCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
     traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
   }
 
@@ -10990,8 +11042,8 @@ export namespace Prisma {
     relationship?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutPersonsNestedInput
     loveTypes?: PersonLoveCategoryUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
     traits?: TraitUpdateManyWithoutPersonNestedInput
   }
 
@@ -11001,8 +11053,8 @@ export namespace Prisma {
     relationship?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     loveTypes?: PersonLoveCategoryUncheckedUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
     traits?: TraitUncheckedUpdateManyWithoutPersonNestedInput
   }
 
@@ -11144,8 +11196,8 @@ export namespace Prisma {
   export type PersonLoveCategoryCreateInput = {
     id?: string
     note?: string | null
-    person: PersonCreateNestedOneWithoutLoveTypesInput
     loveCategory: LoveCategoryCreateNestedOneWithoutPersonsInput
+    person: PersonCreateNestedOneWithoutLoveTypesInput
   }
 
   export type PersonLoveCategoryUncheckedCreateInput = {
@@ -11158,8 +11210,8 @@ export namespace Prisma {
   export type PersonLoveCategoryUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     note?: NullableStringFieldUpdateOperationsInput | string | null
-    person?: PersonUpdateOneRequiredWithoutLoveTypesNestedInput
     loveCategory?: LoveCategoryUpdateOneRequiredWithoutPersonsNestedInput
+    person?: PersonUpdateOneRequiredWithoutLoveTypesNestedInput
   }
 
   export type PersonLoveCategoryUncheckedUpdateInput = {
@@ -11192,8 +11244,8 @@ export namespace Prisma {
     id?: string
     title: string
     date: Date | string
-    person: PersonCreateNestedOneWithoutSpecialDaysInput
     gifts?: GiftCreateNestedManyWithoutSpecialDayInput
+    person: PersonCreateNestedOneWithoutSpecialDaysInput
   }
 
   export type SpecialDayUncheckedCreateInput = {
@@ -11208,8 +11260,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    person?: PersonUpdateOneRequiredWithoutSpecialDaysNestedInput
     gifts?: GiftUpdateManyWithoutSpecialDayNestedInput
+    person?: PersonUpdateOneRequiredWithoutSpecialDaysNestedInput
   }
 
   export type SpecialDayUncheckedUpdateInput = {
@@ -11351,6 +11403,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -11377,8 +11434,10 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    emailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    admin?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -11386,8 +11445,10 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    emailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    admin?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -11395,8 +11456,10 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrder
     password?: SortOrder
+    emailVerified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    admin?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -11415,6 +11478,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -11442,16 +11513,16 @@ export namespace Prisma {
     none?: PersonLoveCategoryWhereInput
   }
 
-  export type SpecialDayListRelationFilter = {
-    every?: SpecialDayWhereInput
-    some?: SpecialDayWhereInput
-    none?: SpecialDayWhereInput
-  }
-
   export type RejectedGiftIdeaListRelationFilter = {
     every?: RejectedGiftIdeaWhereInput
     some?: RejectedGiftIdeaWhereInput
     none?: RejectedGiftIdeaWhereInput
+  }
+
+  export type SpecialDayListRelationFilter = {
+    every?: SpecialDayWhereInput
+    some?: SpecialDayWhereInput
+    none?: SpecialDayWhereInput
   }
 
   export type TraitListRelationFilter = {
@@ -11464,11 +11535,11 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type SpecialDayOrderByRelationAggregateInput = {
+  export type RejectedGiftIdeaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type RejectedGiftIdeaOrderByRelationAggregateInput = {
+  export type SpecialDayOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -11495,11 +11566,6 @@ export namespace Prisma {
     name?: SortOrder
     relationship?: SortOrder
     userId?: SortOrder
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type SpecialDayScalarRelationFilter = {
@@ -11532,14 +11598,6 @@ export namespace Prisma {
     done?: SortOrder
     specialDayId?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type LoveCategoryCountOrderByAggregateInput = {
@@ -11578,14 +11636,14 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type PersonScalarRelationFilter = {
-    is?: PersonWhereInput
-    isNot?: PersonWhereInput
-  }
-
   export type LoveCategoryScalarRelationFilter = {
     is?: LoveCategoryWhereInput
     isNot?: LoveCategoryWhereInput
+  }
+
+  export type PersonScalarRelationFilter = {
+    is?: PersonWhereInput
+    isNot?: PersonWhereInput
   }
 
   export type SortOrderInput = {
@@ -11740,6 +11798,10 @@ export namespace Prisma {
     set?: string
   }
 
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -11785,18 +11847,18 @@ export namespace Prisma {
     connect?: PersonLoveCategoryWhereUniqueInput | PersonLoveCategoryWhereUniqueInput[]
   }
 
-  export type SpecialDayCreateNestedManyWithoutPersonInput = {
-    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
-    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
-    createMany?: SpecialDayCreateManyPersonInputEnvelope
-    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-  }
-
   export type RejectedGiftIdeaCreateNestedManyWithoutPersonInput = {
     create?: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput> | RejectedGiftIdeaCreateWithoutPersonInput[] | RejectedGiftIdeaUncheckedCreateWithoutPersonInput[]
     connectOrCreate?: RejectedGiftIdeaCreateOrConnectWithoutPersonInput | RejectedGiftIdeaCreateOrConnectWithoutPersonInput[]
     createMany?: RejectedGiftIdeaCreateManyPersonInputEnvelope
     connect?: RejectedGiftIdeaWhereUniqueInput | RejectedGiftIdeaWhereUniqueInput[]
+  }
+
+  export type SpecialDayCreateNestedManyWithoutPersonInput = {
+    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
+    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
+    createMany?: SpecialDayCreateManyPersonInputEnvelope
+    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
   }
 
   export type TraitCreateNestedManyWithoutPersonInput = {
@@ -11813,18 +11875,18 @@ export namespace Prisma {
     connect?: PersonLoveCategoryWhereUniqueInput | PersonLoveCategoryWhereUniqueInput[]
   }
 
-  export type SpecialDayUncheckedCreateNestedManyWithoutPersonInput = {
-    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
-    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
-    createMany?: SpecialDayCreateManyPersonInputEnvelope
-    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-  }
-
   export type RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput = {
     create?: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput> | RejectedGiftIdeaCreateWithoutPersonInput[] | RejectedGiftIdeaUncheckedCreateWithoutPersonInput[]
     connectOrCreate?: RejectedGiftIdeaCreateOrConnectWithoutPersonInput | RejectedGiftIdeaCreateOrConnectWithoutPersonInput[]
     createMany?: RejectedGiftIdeaCreateManyPersonInputEnvelope
     connect?: RejectedGiftIdeaWhereUniqueInput | RejectedGiftIdeaWhereUniqueInput[]
+  }
+
+  export type SpecialDayUncheckedCreateNestedManyWithoutPersonInput = {
+    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
+    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
+    createMany?: SpecialDayCreateManyPersonInputEnvelope
+    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
   }
 
   export type TraitUncheckedCreateNestedManyWithoutPersonInput = {
@@ -11856,20 +11918,6 @@ export namespace Prisma {
     deleteMany?: PersonLoveCategoryScalarWhereInput | PersonLoveCategoryScalarWhereInput[]
   }
 
-  export type SpecialDayUpdateManyWithoutPersonNestedInput = {
-    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
-    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
-    upsert?: SpecialDayUpsertWithWhereUniqueWithoutPersonInput | SpecialDayUpsertWithWhereUniqueWithoutPersonInput[]
-    createMany?: SpecialDayCreateManyPersonInputEnvelope
-    set?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    disconnect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    delete?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    update?: SpecialDayUpdateWithWhereUniqueWithoutPersonInput | SpecialDayUpdateWithWhereUniqueWithoutPersonInput[]
-    updateMany?: SpecialDayUpdateManyWithWhereWithoutPersonInput | SpecialDayUpdateManyWithWhereWithoutPersonInput[]
-    deleteMany?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
-  }
-
   export type RejectedGiftIdeaUpdateManyWithoutPersonNestedInput = {
     create?: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput> | RejectedGiftIdeaCreateWithoutPersonInput[] | RejectedGiftIdeaUncheckedCreateWithoutPersonInput[]
     connectOrCreate?: RejectedGiftIdeaCreateOrConnectWithoutPersonInput | RejectedGiftIdeaCreateOrConnectWithoutPersonInput[]
@@ -11882,6 +11930,20 @@ export namespace Prisma {
     update?: RejectedGiftIdeaUpdateWithWhereUniqueWithoutPersonInput | RejectedGiftIdeaUpdateWithWhereUniqueWithoutPersonInput[]
     updateMany?: RejectedGiftIdeaUpdateManyWithWhereWithoutPersonInput | RejectedGiftIdeaUpdateManyWithWhereWithoutPersonInput[]
     deleteMany?: RejectedGiftIdeaScalarWhereInput | RejectedGiftIdeaScalarWhereInput[]
+  }
+
+  export type SpecialDayUpdateManyWithoutPersonNestedInput = {
+    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
+    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
+    upsert?: SpecialDayUpsertWithWhereUniqueWithoutPersonInput | SpecialDayUpsertWithWhereUniqueWithoutPersonInput[]
+    createMany?: SpecialDayCreateManyPersonInputEnvelope
+    set?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    disconnect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    delete?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    update?: SpecialDayUpdateWithWhereUniqueWithoutPersonInput | SpecialDayUpdateWithWhereUniqueWithoutPersonInput[]
+    updateMany?: SpecialDayUpdateManyWithWhereWithoutPersonInput | SpecialDayUpdateManyWithWhereWithoutPersonInput[]
+    deleteMany?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
   }
 
   export type TraitUpdateManyWithoutPersonNestedInput = {
@@ -11912,20 +11974,6 @@ export namespace Prisma {
     deleteMany?: PersonLoveCategoryScalarWhereInput | PersonLoveCategoryScalarWhereInput[]
   }
 
-  export type SpecialDayUncheckedUpdateManyWithoutPersonNestedInput = {
-    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
-    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
-    upsert?: SpecialDayUpsertWithWhereUniqueWithoutPersonInput | SpecialDayUpsertWithWhereUniqueWithoutPersonInput[]
-    createMany?: SpecialDayCreateManyPersonInputEnvelope
-    set?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    disconnect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    delete?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
-    update?: SpecialDayUpdateWithWhereUniqueWithoutPersonInput | SpecialDayUpdateWithWhereUniqueWithoutPersonInput[]
-    updateMany?: SpecialDayUpdateManyWithWhereWithoutPersonInput | SpecialDayUpdateManyWithWhereWithoutPersonInput[]
-    deleteMany?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
-  }
-
   export type RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput = {
     create?: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput> | RejectedGiftIdeaCreateWithoutPersonInput[] | RejectedGiftIdeaUncheckedCreateWithoutPersonInput[]
     connectOrCreate?: RejectedGiftIdeaCreateOrConnectWithoutPersonInput | RejectedGiftIdeaCreateOrConnectWithoutPersonInput[]
@@ -11938,6 +11986,20 @@ export namespace Prisma {
     update?: RejectedGiftIdeaUpdateWithWhereUniqueWithoutPersonInput | RejectedGiftIdeaUpdateWithWhereUniqueWithoutPersonInput[]
     updateMany?: RejectedGiftIdeaUpdateManyWithWhereWithoutPersonInput | RejectedGiftIdeaUpdateManyWithWhereWithoutPersonInput[]
     deleteMany?: RejectedGiftIdeaScalarWhereInput | RejectedGiftIdeaScalarWhereInput[]
+  }
+
+  export type SpecialDayUncheckedUpdateManyWithoutPersonNestedInput = {
+    create?: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput> | SpecialDayCreateWithoutPersonInput[] | SpecialDayUncheckedCreateWithoutPersonInput[]
+    connectOrCreate?: SpecialDayCreateOrConnectWithoutPersonInput | SpecialDayCreateOrConnectWithoutPersonInput[]
+    upsert?: SpecialDayUpsertWithWhereUniqueWithoutPersonInput | SpecialDayUpsertWithWhereUniqueWithoutPersonInput[]
+    createMany?: SpecialDayCreateManyPersonInputEnvelope
+    set?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    disconnect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    delete?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    connect?: SpecialDayWhereUniqueInput | SpecialDayWhereUniqueInput[]
+    update?: SpecialDayUpdateWithWhereUniqueWithoutPersonInput | SpecialDayUpdateWithWhereUniqueWithoutPersonInput[]
+    updateMany?: SpecialDayUpdateManyWithWhereWithoutPersonInput | SpecialDayUpdateManyWithWhereWithoutPersonInput[]
+    deleteMany?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
   }
 
   export type TraitUncheckedUpdateManyWithoutPersonNestedInput = {
@@ -11958,10 +12020,6 @@ export namespace Prisma {
     create?: XOR<SpecialDayCreateWithoutGiftsInput, SpecialDayUncheckedCreateWithoutGiftsInput>
     connectOrCreate?: SpecialDayCreateOrConnectWithoutGiftsInput
     connect?: SpecialDayWhereUniqueInput
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
   }
 
   export type SpecialDayUpdateOneRequiredWithoutGiftsNestedInput = {
@@ -12014,28 +12072,20 @@ export namespace Prisma {
     deleteMany?: PersonLoveCategoryScalarWhereInput | PersonLoveCategoryScalarWhereInput[]
   }
 
-  export type PersonCreateNestedOneWithoutLoveTypesInput = {
-    create?: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
-    connectOrCreate?: PersonCreateOrConnectWithoutLoveTypesInput
-    connect?: PersonWhereUniqueInput
-  }
-
   export type LoveCategoryCreateNestedOneWithoutPersonsInput = {
     create?: XOR<LoveCategoryCreateWithoutPersonsInput, LoveCategoryUncheckedCreateWithoutPersonsInput>
     connectOrCreate?: LoveCategoryCreateOrConnectWithoutPersonsInput
     connect?: LoveCategoryWhereUniqueInput
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type PersonUpdateOneRequiredWithoutLoveTypesNestedInput = {
+  export type PersonCreateNestedOneWithoutLoveTypesInput = {
     create?: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
     connectOrCreate?: PersonCreateOrConnectWithoutLoveTypesInput
-    upsert?: PersonUpsertWithoutLoveTypesInput
     connect?: PersonWhereUniqueInput
-    update?: XOR<XOR<PersonUpdateToOneWithWhereWithoutLoveTypesInput, PersonUpdateWithoutLoveTypesInput>, PersonUncheckedUpdateWithoutLoveTypesInput>
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type LoveCategoryUpdateOneRequiredWithoutPersonsNestedInput = {
@@ -12046,10 +12096,12 @@ export namespace Prisma {
     update?: XOR<XOR<LoveCategoryUpdateToOneWithWhereWithoutPersonsInput, LoveCategoryUpdateWithoutPersonsInput>, LoveCategoryUncheckedUpdateWithoutPersonsInput>
   }
 
-  export type PersonCreateNestedOneWithoutSpecialDaysInput = {
-    create?: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
-    connectOrCreate?: PersonCreateOrConnectWithoutSpecialDaysInput
+  export type PersonUpdateOneRequiredWithoutLoveTypesNestedInput = {
+    create?: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
+    connectOrCreate?: PersonCreateOrConnectWithoutLoveTypesInput
+    upsert?: PersonUpsertWithoutLoveTypesInput
     connect?: PersonWhereUniqueInput
+    update?: XOR<XOR<PersonUpdateToOneWithWhereWithoutLoveTypesInput, PersonUpdateWithoutLoveTypesInput>, PersonUncheckedUpdateWithoutLoveTypesInput>
   }
 
   export type GiftCreateNestedManyWithoutSpecialDayInput = {
@@ -12059,19 +12111,17 @@ export namespace Prisma {
     connect?: GiftWhereUniqueInput | GiftWhereUniqueInput[]
   }
 
+  export type PersonCreateNestedOneWithoutSpecialDaysInput = {
+    create?: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
+    connectOrCreate?: PersonCreateOrConnectWithoutSpecialDaysInput
+    connect?: PersonWhereUniqueInput
+  }
+
   export type GiftUncheckedCreateNestedManyWithoutSpecialDayInput = {
     create?: XOR<GiftCreateWithoutSpecialDayInput, GiftUncheckedCreateWithoutSpecialDayInput> | GiftCreateWithoutSpecialDayInput[] | GiftUncheckedCreateWithoutSpecialDayInput[]
     connectOrCreate?: GiftCreateOrConnectWithoutSpecialDayInput | GiftCreateOrConnectWithoutSpecialDayInput[]
     createMany?: GiftCreateManySpecialDayInputEnvelope
     connect?: GiftWhereUniqueInput | GiftWhereUniqueInput[]
-  }
-
-  export type PersonUpdateOneRequiredWithoutSpecialDaysNestedInput = {
-    create?: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
-    connectOrCreate?: PersonCreateOrConnectWithoutSpecialDaysInput
-    upsert?: PersonUpsertWithoutSpecialDaysInput
-    connect?: PersonWhereUniqueInput
-    update?: XOR<XOR<PersonUpdateToOneWithWhereWithoutSpecialDaysInput, PersonUpdateWithoutSpecialDaysInput>, PersonUncheckedUpdateWithoutSpecialDaysInput>
   }
 
   export type GiftUpdateManyWithoutSpecialDayNestedInput = {
@@ -12086,6 +12136,14 @@ export namespace Prisma {
     update?: GiftUpdateWithWhereUniqueWithoutSpecialDayInput | GiftUpdateWithWhereUniqueWithoutSpecialDayInput[]
     updateMany?: GiftUpdateManyWithWhereWithoutSpecialDayInput | GiftUpdateManyWithWhereWithoutSpecialDayInput[]
     deleteMany?: GiftScalarWhereInput | GiftScalarWhereInput[]
+  }
+
+  export type PersonUpdateOneRequiredWithoutSpecialDaysNestedInput = {
+    create?: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
+    connectOrCreate?: PersonCreateOrConnectWithoutSpecialDaysInput
+    upsert?: PersonUpsertWithoutSpecialDaysInput
+    connect?: PersonWhereUniqueInput
+    update?: XOR<XOR<PersonUpdateToOneWithWhereWithoutSpecialDaysInput, PersonUpdateWithoutSpecialDaysInput>, PersonUncheckedUpdateWithoutSpecialDaysInput>
   }
 
   export type GiftUncheckedUpdateManyWithoutSpecialDayNestedInput = {
@@ -12148,6 +12206,11 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -12187,6 +12250,14 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -12199,19 +12270,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -12278,8 +12336,8 @@ export namespace Prisma {
     name: string
     relationship: string
     loveTypes?: PersonLoveCategoryCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
     traits?: TraitCreateNestedManyWithoutPersonInput
   }
 
@@ -12288,8 +12346,8 @@ export namespace Prisma {
     name: string
     relationship: string
     loveTypes?: PersonLoveCategoryUncheckedCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
     traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
   }
 
@@ -12334,8 +12392,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: boolean
   }
 
   export type UserUncheckedCreateWithoutPersonsInput = {
@@ -12343,8 +12403,10 @@ export namespace Prisma {
     email: string
     name: string
     password: string
+    emailVerified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    admin?: boolean
   }
 
   export type UserCreateOrConnectWithoutPersonsInput = {
@@ -12374,6 +12436,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RejectedGiftIdeaCreateWithoutPersonInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type RejectedGiftIdeaUncheckedCreateWithoutPersonInput = {
+    id?: string
+    content: string
+    createdAt?: Date | string
+  }
+
+  export type RejectedGiftIdeaCreateOrConnectWithoutPersonInput = {
+    where: RejectedGiftIdeaWhereUniqueInput
+    create: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput>
+  }
+
+  export type RejectedGiftIdeaCreateManyPersonInputEnvelope = {
+    data: RejectedGiftIdeaCreateManyPersonInput | RejectedGiftIdeaCreateManyPersonInput[]
+    skipDuplicates?: boolean
+  }
+
   export type SpecialDayCreateWithoutPersonInput = {
     id?: string
     title: string
@@ -12395,28 +12479,6 @@ export namespace Prisma {
 
   export type SpecialDayCreateManyPersonInputEnvelope = {
     data: SpecialDayCreateManyPersonInput | SpecialDayCreateManyPersonInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type RejectedGiftIdeaCreateWithoutPersonInput = {
-    id?: string
-    content: string
-    createdAt?: Date | string
-  }
-
-  export type RejectedGiftIdeaUncheckedCreateWithoutPersonInput = {
-    id?: string
-    content: string
-    createdAt?: Date | string
-  }
-
-  export type RejectedGiftIdeaCreateOrConnectWithoutPersonInput = {
-    where: RejectedGiftIdeaWhereUniqueInput
-    create: XOR<RejectedGiftIdeaCreateWithoutPersonInput, RejectedGiftIdeaUncheckedCreateWithoutPersonInput>
-  }
-
-  export type RejectedGiftIdeaCreateManyPersonInputEnvelope = {
-    data: RejectedGiftIdeaCreateManyPersonInput | RejectedGiftIdeaCreateManyPersonInput[]
     skipDuplicates?: boolean
   }
 
@@ -12458,8 +12520,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserUncheckedUpdateWithoutPersonsInput = {
@@ -12467,8 +12531,10 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    admin?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type PersonLoveCategoryUpsertWithWhereUniqueWithoutPersonInput = {
@@ -12497,32 +12563,6 @@ export namespace Prisma {
     note?: StringNullableFilter<"PersonLoveCategory"> | string | null
   }
 
-  export type SpecialDayUpsertWithWhereUniqueWithoutPersonInput = {
-    where: SpecialDayWhereUniqueInput
-    update: XOR<SpecialDayUpdateWithoutPersonInput, SpecialDayUncheckedUpdateWithoutPersonInput>
-    create: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput>
-  }
-
-  export type SpecialDayUpdateWithWhereUniqueWithoutPersonInput = {
-    where: SpecialDayWhereUniqueInput
-    data: XOR<SpecialDayUpdateWithoutPersonInput, SpecialDayUncheckedUpdateWithoutPersonInput>
-  }
-
-  export type SpecialDayUpdateManyWithWhereWithoutPersonInput = {
-    where: SpecialDayScalarWhereInput
-    data: XOR<SpecialDayUpdateManyMutationInput, SpecialDayUncheckedUpdateManyWithoutPersonInput>
-  }
-
-  export type SpecialDayScalarWhereInput = {
-    AND?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
-    OR?: SpecialDayScalarWhereInput[]
-    NOT?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
-    id?: StringFilter<"SpecialDay"> | string
-    personId?: StringFilter<"SpecialDay"> | string
-    title?: StringFilter<"SpecialDay"> | string
-    date?: DateTimeFilter<"SpecialDay"> | Date | string
-  }
-
   export type RejectedGiftIdeaUpsertWithWhereUniqueWithoutPersonInput = {
     where: RejectedGiftIdeaWhereUniqueInput
     update: XOR<RejectedGiftIdeaUpdateWithoutPersonInput, RejectedGiftIdeaUncheckedUpdateWithoutPersonInput>
@@ -12547,6 +12587,32 @@ export namespace Prisma {
     personId?: StringFilter<"RejectedGiftIdea"> | string
     content?: StringFilter<"RejectedGiftIdea"> | string
     createdAt?: DateTimeFilter<"RejectedGiftIdea"> | Date | string
+  }
+
+  export type SpecialDayUpsertWithWhereUniqueWithoutPersonInput = {
+    where: SpecialDayWhereUniqueInput
+    update: XOR<SpecialDayUpdateWithoutPersonInput, SpecialDayUncheckedUpdateWithoutPersonInput>
+    create: XOR<SpecialDayCreateWithoutPersonInput, SpecialDayUncheckedCreateWithoutPersonInput>
+  }
+
+  export type SpecialDayUpdateWithWhereUniqueWithoutPersonInput = {
+    where: SpecialDayWhereUniqueInput
+    data: XOR<SpecialDayUpdateWithoutPersonInput, SpecialDayUncheckedUpdateWithoutPersonInput>
+  }
+
+  export type SpecialDayUpdateManyWithWhereWithoutPersonInput = {
+    where: SpecialDayScalarWhereInput
+    data: XOR<SpecialDayUpdateManyMutationInput, SpecialDayUncheckedUpdateManyWithoutPersonInput>
+  }
+
+  export type SpecialDayScalarWhereInput = {
+    AND?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
+    OR?: SpecialDayScalarWhereInput[]
+    NOT?: SpecialDayScalarWhereInput | SpecialDayScalarWhereInput[]
+    id?: StringFilter<"SpecialDay"> | string
+    personId?: StringFilter<"SpecialDay"> | string
+    title?: StringFilter<"SpecialDay"> | string
+    date?: DateTimeFilter<"SpecialDay"> | Date | string
   }
 
   export type TraitUpsertWithWhereUniqueWithoutPersonInput = {
@@ -12657,31 +12723,6 @@ export namespace Prisma {
     data: XOR<PersonLoveCategoryUpdateManyMutationInput, PersonLoveCategoryUncheckedUpdateManyWithoutLoveCategoryInput>
   }
 
-  export type PersonCreateWithoutLoveTypesInput = {
-    id?: string
-    name: string
-    relationship: string
-    user: UserCreateNestedOneWithoutPersonsInput
-    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
-    rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
-    traits?: TraitCreateNestedManyWithoutPersonInput
-  }
-
-  export type PersonUncheckedCreateWithoutLoveTypesInput = {
-    id?: string
-    name: string
-    relationship: string
-    userId: string
-    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
-    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
-    traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
-  }
-
-  export type PersonCreateOrConnectWithoutLoveTypesInput = {
-    where: PersonWhereUniqueInput
-    create: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
-  }
-
   export type LoveCategoryCreateWithoutPersonsInput = {
     id?: string
     name: string
@@ -12701,35 +12742,29 @@ export namespace Prisma {
     create: XOR<LoveCategoryCreateWithoutPersonsInput, LoveCategoryUncheckedCreateWithoutPersonsInput>
   }
 
-  export type PersonUpsertWithoutLoveTypesInput = {
-    update: XOR<PersonUpdateWithoutLoveTypesInput, PersonUncheckedUpdateWithoutLoveTypesInput>
+  export type PersonCreateWithoutLoveTypesInput = {
+    id?: string
+    name: string
+    relationship: string
+    user: UserCreateNestedOneWithoutPersonsInput
+    rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
+    traits?: TraitCreateNestedManyWithoutPersonInput
+  }
+
+  export type PersonUncheckedCreateWithoutLoveTypesInput = {
+    id?: string
+    name: string
+    relationship: string
+    userId: string
+    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
+    traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
+  }
+
+  export type PersonCreateOrConnectWithoutLoveTypesInput = {
+    where: PersonWhereUniqueInput
     create: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
-    where?: PersonWhereInput
-  }
-
-  export type PersonUpdateToOneWithWhereWithoutLoveTypesInput = {
-    where?: PersonWhereInput
-    data: XOR<PersonUpdateWithoutLoveTypesInput, PersonUncheckedUpdateWithoutLoveTypesInput>
-  }
-
-  export type PersonUpdateWithoutLoveTypesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    relationship?: StringFieldUpdateOperationsInput | string
-    user?: UserUpdateOneRequiredWithoutPersonsNestedInput
-    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
-    rejectedGiftIdeas?: RejectedGiftIdeaUpdateManyWithoutPersonNestedInput
-    traits?: TraitUpdateManyWithoutPersonNestedInput
-  }
-
-  export type PersonUncheckedUpdateWithoutLoveTypesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    relationship?: StringFieldUpdateOperationsInput | string
-    userId?: StringFieldUpdateOperationsInput | string
-    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
-    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
-    traits?: TraitUncheckedUpdateManyWithoutPersonNestedInput
   }
 
   export type LoveCategoryUpsertWithoutPersonsInput = {
@@ -12757,29 +12792,35 @@ export namespace Prisma {
     description?: StringFieldUpdateOperationsInput | string
   }
 
-  export type PersonCreateWithoutSpecialDaysInput = {
-    id?: string
-    name: string
-    relationship: string
-    user: UserCreateNestedOneWithoutPersonsInput
-    loveTypes?: PersonLoveCategoryCreateNestedManyWithoutPersonInput
-    rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
-    traits?: TraitCreateNestedManyWithoutPersonInput
+  export type PersonUpsertWithoutLoveTypesInput = {
+    update: XOR<PersonUpdateWithoutLoveTypesInput, PersonUncheckedUpdateWithoutLoveTypesInput>
+    create: XOR<PersonCreateWithoutLoveTypesInput, PersonUncheckedCreateWithoutLoveTypesInput>
+    where?: PersonWhereInput
   }
 
-  export type PersonUncheckedCreateWithoutSpecialDaysInput = {
-    id?: string
-    name: string
-    relationship: string
-    userId: string
-    loveTypes?: PersonLoveCategoryUncheckedCreateNestedManyWithoutPersonInput
-    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
-    traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
+  export type PersonUpdateToOneWithWhereWithoutLoveTypesInput = {
+    where?: PersonWhereInput
+    data: XOR<PersonUpdateWithoutLoveTypesInput, PersonUncheckedUpdateWithoutLoveTypesInput>
   }
 
-  export type PersonCreateOrConnectWithoutSpecialDaysInput = {
-    where: PersonWhereUniqueInput
-    create: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
+  export type PersonUpdateWithoutLoveTypesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    relationship?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutPersonsNestedInput
+    rejectedGiftIdeas?: RejectedGiftIdeaUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
+    traits?: TraitUpdateManyWithoutPersonNestedInput
+  }
+
+  export type PersonUncheckedUpdateWithoutLoveTypesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    relationship?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
+    traits?: TraitUncheckedUpdateManyWithoutPersonNestedInput
   }
 
   export type GiftCreateWithoutSpecialDayInput = {
@@ -12806,6 +12847,59 @@ export namespace Prisma {
   export type GiftCreateManySpecialDayInputEnvelope = {
     data: GiftCreateManySpecialDayInput | GiftCreateManySpecialDayInput[]
     skipDuplicates?: boolean
+  }
+
+  export type PersonCreateWithoutSpecialDaysInput = {
+    id?: string
+    name: string
+    relationship: string
+    user: UserCreateNestedOneWithoutPersonsInput
+    loveTypes?: PersonLoveCategoryCreateNestedManyWithoutPersonInput
+    rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
+    traits?: TraitCreateNestedManyWithoutPersonInput
+  }
+
+  export type PersonUncheckedCreateWithoutSpecialDaysInput = {
+    id?: string
+    name: string
+    relationship: string
+    userId: string
+    loveTypes?: PersonLoveCategoryUncheckedCreateNestedManyWithoutPersonInput
+    rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
+    traits?: TraitUncheckedCreateNestedManyWithoutPersonInput
+  }
+
+  export type PersonCreateOrConnectWithoutSpecialDaysInput = {
+    where: PersonWhereUniqueInput
+    create: XOR<PersonCreateWithoutSpecialDaysInput, PersonUncheckedCreateWithoutSpecialDaysInput>
+  }
+
+  export type GiftUpsertWithWhereUniqueWithoutSpecialDayInput = {
+    where: GiftWhereUniqueInput
+    update: XOR<GiftUpdateWithoutSpecialDayInput, GiftUncheckedUpdateWithoutSpecialDayInput>
+    create: XOR<GiftCreateWithoutSpecialDayInput, GiftUncheckedCreateWithoutSpecialDayInput>
+  }
+
+  export type GiftUpdateWithWhereUniqueWithoutSpecialDayInput = {
+    where: GiftWhereUniqueInput
+    data: XOR<GiftUpdateWithoutSpecialDayInput, GiftUncheckedUpdateWithoutSpecialDayInput>
+  }
+
+  export type GiftUpdateManyWithWhereWithoutSpecialDayInput = {
+    where: GiftScalarWhereInput
+    data: XOR<GiftUpdateManyMutationInput, GiftUncheckedUpdateManyWithoutSpecialDayInput>
+  }
+
+  export type GiftScalarWhereInput = {
+    AND?: GiftScalarWhereInput | GiftScalarWhereInput[]
+    OR?: GiftScalarWhereInput[]
+    NOT?: GiftScalarWhereInput | GiftScalarWhereInput[]
+    id?: StringFilter<"Gift"> | string
+    title?: StringFilter<"Gift"> | string
+    website?: StringFilter<"Gift"> | string
+    done?: BoolFilter<"Gift"> | boolean
+    specialDayId?: StringFilter<"Gift"> | string
+    createdAt?: DateTimeFilter<"Gift"> | Date | string
   }
 
   export type PersonUpsertWithoutSpecialDaysInput = {
@@ -12837,34 +12931,6 @@ export namespace Prisma {
     loveTypes?: PersonLoveCategoryUncheckedUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
     traits?: TraitUncheckedUpdateManyWithoutPersonNestedInput
-  }
-
-  export type GiftUpsertWithWhereUniqueWithoutSpecialDayInput = {
-    where: GiftWhereUniqueInput
-    update: XOR<GiftUpdateWithoutSpecialDayInput, GiftUncheckedUpdateWithoutSpecialDayInput>
-    create: XOR<GiftCreateWithoutSpecialDayInput, GiftUncheckedCreateWithoutSpecialDayInput>
-  }
-
-  export type GiftUpdateWithWhereUniqueWithoutSpecialDayInput = {
-    where: GiftWhereUniqueInput
-    data: XOR<GiftUpdateWithoutSpecialDayInput, GiftUncheckedUpdateWithoutSpecialDayInput>
-  }
-
-  export type GiftUpdateManyWithWhereWithoutSpecialDayInput = {
-    where: GiftScalarWhereInput
-    data: XOR<GiftUpdateManyMutationInput, GiftUncheckedUpdateManyWithoutSpecialDayInput>
-  }
-
-  export type GiftScalarWhereInput = {
-    AND?: GiftScalarWhereInput | GiftScalarWhereInput[]
-    OR?: GiftScalarWhereInput[]
-    NOT?: GiftScalarWhereInput | GiftScalarWhereInput[]
-    id?: StringFilter<"Gift"> | string
-    title?: StringFilter<"Gift"> | string
-    website?: StringFilter<"Gift"> | string
-    done?: BoolFilter<"Gift"> | boolean
-    specialDayId?: StringFilter<"Gift"> | string
-    createdAt?: DateTimeFilter<"Gift"> | Date | string
   }
 
   export type PersonCreateWithoutRejectedGiftIdeasInput = {
@@ -12929,8 +12995,8 @@ export namespace Prisma {
     relationship: string
     user: UserCreateNestedOneWithoutPersonsInput
     loveTypes?: PersonLoveCategoryCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayCreateNestedManyWithoutPersonInput
   }
 
   export type PersonUncheckedCreateWithoutTraitsInput = {
@@ -12939,8 +13005,8 @@ export namespace Prisma {
     relationship: string
     userId: string
     loveTypes?: PersonLoveCategoryUncheckedCreateNestedManyWithoutPersonInput
-    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedCreateNestedManyWithoutPersonInput
+    specialDays?: SpecialDayUncheckedCreateNestedManyWithoutPersonInput
   }
 
   export type PersonCreateOrConnectWithoutTraitsInput = {
@@ -12965,8 +13031,8 @@ export namespace Prisma {
     relationship?: StringFieldUpdateOperationsInput | string
     user?: UserUpdateOneRequiredWithoutPersonsNestedInput
     loveTypes?: PersonLoveCategoryUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
   }
 
   export type PersonUncheckedUpdateWithoutTraitsInput = {
@@ -12975,8 +13041,8 @@ export namespace Prisma {
     relationship?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     loveTypes?: PersonLoveCategoryUncheckedUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
   }
 
   export type PersonCreateManyUserInput = {
@@ -12990,8 +13056,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     relationship?: StringFieldUpdateOperationsInput | string
     loveTypes?: PersonLoveCategoryUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUpdateManyWithoutPersonNestedInput
     traits?: TraitUpdateManyWithoutPersonNestedInput
   }
 
@@ -13000,8 +13066,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     relationship?: StringFieldUpdateOperationsInput | string
     loveTypes?: PersonLoveCategoryUncheckedUpdateManyWithoutPersonNestedInput
-    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
     rejectedGiftIdeas?: RejectedGiftIdeaUncheckedUpdateManyWithoutPersonNestedInput
+    specialDays?: SpecialDayUncheckedUpdateManyWithoutPersonNestedInput
     traits?: TraitUncheckedUpdateManyWithoutPersonNestedInput
   }
 
@@ -13017,16 +13083,16 @@ export namespace Prisma {
     note?: string | null
   }
 
-  export type SpecialDayCreateManyPersonInput = {
-    id?: string
-    title: string
-    date: Date | string
-  }
-
   export type RejectedGiftIdeaCreateManyPersonInput = {
     id?: string
     content: string
     createdAt?: Date | string
+  }
+
+  export type SpecialDayCreateManyPersonInput = {
+    id?: string
+    title: string
+    date: Date | string
   }
 
   export type TraitCreateManyPersonInput = {
@@ -13053,6 +13119,24 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type RejectedGiftIdeaUpdateWithoutPersonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RejectedGiftIdeaUncheckedUpdateWithoutPersonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RejectedGiftIdeaUncheckedUpdateManyWithoutPersonInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SpecialDayUpdateWithoutPersonInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
@@ -13071,24 +13155,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RejectedGiftIdeaUpdateWithoutPersonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RejectedGiftIdeaUncheckedUpdateWithoutPersonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type RejectedGiftIdeaUncheckedUpdateManyWithoutPersonInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    content?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TraitUpdateWithoutPersonInput = {

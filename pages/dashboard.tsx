@@ -5,16 +5,21 @@ import { useRouter } from "next/router";
 import Calendar from "../components/Calendar";
 import Layout from "../components/Layout";
 import UpcomingSpecialDaysInline from "../components/UpcomingSpecialDaysInline";
+import { useSession } from "next-auth/react";
+import { Modal } from "react-bootstrap";
 
 export default function PeoplePage() {
   const router = useRouter();
+  const { data: session } = useSession();
   const { persons, setPersons } = usePersonStore();
   const [name, setName] = useState("");
   const [relationship, setRelationship] = useState("");
 
   useEffect(() => {
-    fetchPeople();
-  }, []);
+    if (session) {
+      fetchPeople();
+    }
+  }, [session]);
 
   const fetchPeople = async () => {
     const res = await axios.get("/api/persons");
