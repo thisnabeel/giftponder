@@ -54,20 +54,6 @@ export default function UpcomingSpecialDaysInline() {
     return "✨";
   };
 
-  const getDaysLeft = (dateStr: string) => {
-    const today = new Date();
-    const targetDate = new Date(dateStr);
-    const diffTime = targetDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-    if (diffDays > 31) {
-      const months = Math.round(diffDays / 30); // Round months to the nearest whole number
-      return `~${months} month${months > 1 ? "s" : ""}`;
-    }
-
-    return `${diffDays} day${diffDays === 1 ? "" : "s"}`;
-  };
-
   const openGiftModal = async (day) => {
     setSelectedDay(day);
     const res = await axios.get("/api/gifts", {
@@ -147,7 +133,7 @@ export default function UpcomingSpecialDaysInline() {
               return dayDate.getTime() > today.getTime();
             })
             .map((day) => {
-              const daysLeft = typeof getDaysLeft(day.date) === "string" ? parseInt(getDaysLeft(day.date)) : getDaysLeft(day.date);
+              const daysLeft = getDaysLeft(day.date);
               const urgencyClass = getUrgencyClass(daysLeft);
               const emoji = getEmoji(day.title);
 
@@ -220,7 +206,7 @@ export default function UpcomingSpecialDaysInline() {
                       bottom: "-14px",
                     }}
                   >
-                    {daysLeft} left
+                    {sanitizeDaysLabel(daysLeft)}
                   </span>
                 </span>
               );
@@ -370,9 +356,26 @@ export default function UpcomingSpecialDaysInline() {
   );
 }
 
-export function getDaysLeft(date: Date): number {
+export function getDaysLeft(date: Date | string): number {
   const today = new Date();
-  const timeDiff = date.getTime() - today.getTime();
+  const parsedDate = typeof date === "string" ? new Date(date) : date;
+  const timeDiff = parsedDate.getTime() - today.getTime();
   if (isNaN(timeDiff)) return 0; // Handle invalid dates
   return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+}
+
+export function sanitizeDaysLabel(days: number): string {
+  if (days > 31) {
+    const months = Math.round(days / 30);
+    return `~${months} month${months > 1 ? "s" : ""} left`;
+  }
+  return `${days} day${days === 1 ? "" : "s"} left`;
+}
+
+export function sanitizeDaysLabelIn(days: number): string {
+  if (days > 31) {
+    const months = Math.round(days / 30);
+    return `in ~${months} month${months > 1 ? "s" : ""}`;
+  }
+  return `in ${days} day${days === 1 ? "" : "s"}`;
 }

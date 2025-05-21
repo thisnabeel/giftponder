@@ -2,7 +2,10 @@
 import { openai } from "./openai";
 import prisma from "./prisma";
 import { formatInTimeZone } from "date-fns-tz";
-import { getDaysLeft } from "../components/UpcomingSpecialDaysInline";
+import {
+  getDaysLeft,
+  sanitizeDaysLabelIn,
+} from "../components/UpcomingSpecialDaysInline";
 
 async function getUpcomingSpecialDays(userId: string) {
   const now = new Date();
@@ -70,12 +73,13 @@ export async function createGiftNewsletter(
     .map((day) => {
       const emoji = getEmoji(day.title);
       const daysLeft = getDaysLeft(day.date);
+      const daysLabel = sanitizeDaysLabelIn(daysLeft);
       return `
       <tr>
         <td style="padding: 8px; border-bottom: 1px solid #ddd;">${day.person.name}</td>
         <td style="padding: 8px; border-bottom: 1px solid #ddd;">${emoji} ${day.title}</td>
         <td style="padding: 8px; border-bottom: 1px solid #ddd;">${formatDate(day.date)}</td>
-        <td style="padding: 8px; border-bottom: 1px solid #ddd;">in ${daysLeft} day${daysLeft.length == 1 ? "" : "s"}</td>
+        <td style="padding: 8px; border-bottom: 1px solid #ddd;">${daysLabel}</td>
       </tr>
     `;
     })
