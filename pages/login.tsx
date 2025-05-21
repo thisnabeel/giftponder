@@ -185,6 +185,13 @@ function SignupForm() {
           userId: res.data.userId, // Assuming the API returns the new user's ID
         });
 
+        // Send verification email after successful signup
+        await axios.post("/api/auth/send-verification-email", {
+          email: form.email,
+        });
+
+        alert("Verification email sent. Please check your inbox.");
+
         // Redirect to dashboard after creating the person
         window.location.href = "/dashboard"; // Redirect to dashboard on successful login
       }

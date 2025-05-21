@@ -14,11 +14,28 @@ export default function PeoplePage() {
   const { persons, setPersons } = usePersonStore();
   const [name, setName] = useState("");
   const [relationship, setRelationship] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    if (session) {
-      fetchPeople();
-    }
+    const checkEmailVerification = async () => {
+      if (session) {
+        if (!session.user?.emailVerified) {
+          const res = await axios.post("/api/auth/check-email-verified", {
+            email: session.user.email,
+          });
+          if (res.data.emailVerified) {
+            session.user.emailVerified = true; // Update session to reflect verification
+            fetchPeople();
+          } else {
+            setShowModal(true);
+          }
+        } else {
+          fetchPeople();
+        }
+      }
+    };
+
+    checkEmailVerification();
   }, [session]);
 
   const fetchPeople = async () => {
@@ -54,6 +71,28 @@ export default function PeoplePage() {
 
   return (
     <div className="container mt-4">
+      {showModal && (
+        <Modal show={true} backdrop="static" keyboard={false}>
+          <Modal.Header>
+            <Modal.Title>Email Verification Required</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            Please verify your email address to continue. Check your inbox for a
+            verification email.
+            <button
+              className="btn btn-link mt-2"
+              onClick={async () => {
+                await axios.post("/api/auth/send-verification-email", {
+                  email: session?.user?.email,
+                });
+                alert("Verification email resent. Please check your inbox.");
+              }}
+            >
+              Resend Verification Email
+            </button>
+          </Modal.Body>
+        </Modal>
+      )}
       <UpcomingSpecialDaysInline></UpcomingSpecialDaysInline>
       <h2>Your People</h2>
 

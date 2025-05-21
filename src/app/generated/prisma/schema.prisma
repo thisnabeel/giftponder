@@ -9,15 +9,16 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(uuid())
-  email         String   @unique
-  name          String
-  password      String
-  emailVerified Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  persons       Person[]
-  admin         Boolean  @default(false)
+  id               String   @id @default(uuid())
+  email            String   @unique
+  name             String
+  password         String
+  emailVerified    Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  persons          Person[]
+  admin            Boolean  @default(false)
+  verificationCode String?
 }
 
 model Person {
@@ -25,7 +26,7 @@ model Person {
   name              String
   relationship      String
   userId            String
-  user              User                 @relation(fields: [userId], references: [id])
+  user              User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
   loveTypes         PersonLoveCategory[]
   rejectedGiftIdeas RejectedGiftIdea[]
   specialDays       SpecialDay[]
