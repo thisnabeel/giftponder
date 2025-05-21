@@ -13,10 +13,10 @@ export default async function handler(
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const { email } = req.body;
+  const { email, name } = req.body;
 
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" });
+  if (!email || !name) {
+    return res.status(400).json({ message: "Email and name are required" });
   }
 
   try {
@@ -32,8 +32,8 @@ export default async function handler(
     await resend.emails.send({
       from: "GiftPonder <donotreply@giftponder.com>",
       to: email,
-      subject: "Verify Your Email",
-      html: `<p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
+      subject: `${name}, Verify Your Email`,
+      html: `<p>Hi ${name},</p><p>Click <a href="${verificationUrl}">here</a> to verify your email.</p>`,
     });
 
     res.status(200).json({ message: "Verification email sent." });

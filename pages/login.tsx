@@ -188,6 +188,7 @@ function SignupForm() {
         // Send verification email after successful signup
         await axios.post("/api/auth/send-verification-email", {
           email: form.email,
+          name: form.name,
         });
 
         alert("Verification email sent. Please check your inbox.");

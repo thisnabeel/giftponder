@@ -84,6 +84,7 @@ export default function PeoplePage() {
               onClick={async () => {
                 await axios.post("/api/auth/send-verification-email", {
                   email: session?.user?.email,
+                  name: session?.user?.name,
                 });
                 alert("Verification email resent. Please check your inbox.");
               }}
