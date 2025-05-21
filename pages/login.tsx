@@ -159,13 +159,55 @@ function LoginForm() {
 }
 
 function SignupForm() {
-  const [form, setForm] = useState({ email: "", name: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    name: "",
+    password: "",
+    people: Array(1).fill({ name: "", relationship: "" }),
+  });
+  const [step, setStep] = useState(1);
+  const [activeTab, setActiveTab] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
+
+  const isStepOneValid =
+    form.name.trim() !== "" &&
+    form.email.trim() !== "" &&
+    form.password.trim() !== "";
+
+  const nextStep = () => {
+    if (step === 1 && isStepOneValid) {
+      setStep(step + 1);
+    } else if (step === 1) {
+      alert("Please fill out all fields in Step 1 before proceeding.");
+    }
+  };
+
+  const prevStep = () => {
+    if (step > 1) setStep(step - 1);
+  };
+
+  const handleTabClick = (index: number) => {
+    setActiveTab(index);
+  };
+
+  const isAtLeastOnePersonValid = form.people.some(
+    (person) => person.name.trim() !== "" && person.relationship.trim() !== ""
+  );
+
+  const addNewPerson = () => {
+    const newPerson = { name: "", relationship: "" };
+    setForm({
+      ...form,
+      people: [...form.people, newPerson],
+    });
+    setActiveTab(form.people.length); // Switch to the new tab
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true); // Disable form and indicate submission
     try {
       const res = await axios.post("/api/auth/signup", form);
-      alert(res.data?.message || "Signup successful");
 
       // Automatically log the user in after successful signup
       const loginResult = await signIn("credentials", {
@@ -176,7 +218,7 @@ function SignupForm() {
 
       if (loginResult?.error) {
         console.error("Login after signup failed:", loginResult.error);
-        alert("Signup successful, but login failed. Please log in manually.");
+        setIsSubmitting(false); // Re-enable form on failure
       } else {
         // Create a default Person for the new user before redirecting
         await axios.post("/api/persons", {
@@ -185,58 +227,165 @@ function SignupForm() {
           userId: res.data.userId, // Assuming the API returns the new user's ID
         });
 
+        // Create Person entries for the people the user cares about
+        await Promise.all(
+          form.people.map((person) => {
+            if (person.name.length > 0 && person.relationship.length > 0)
+              axios.post("/api/persons", {
+                name: person.name,
+                relationship: person.relationship,
+                userId: res.data.userId,
+              });
+          })
+        );
+
         // Send verification email after successful signup
         await axios.post("/api/auth/send-verification-email", {
           email: form.email,
           name: form.name,
         });
 
+        setIsSubmitting(false); // Re-enable form
         alert("Verification email sent. Please check your inbox.");
-
-        // Redirect to dashboard after creating the person
         window.location.href = "/dashboard"; // Redirect to dashboard on successful login
       }
     } catch (err) {
       console.error("Signup failed:", err.response?.data);
-      alert(err.response?.data?.error || "Signup failed");
+      setIsSubmitting(false); // Re-enable form on failure
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="mb-3">
-        <label className="form-label">Name</label>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Enter your name"
-          required
-          onChange={(e) => setForm({ ...form, name: e.target.value })}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Email</label>
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Enter your email"
-          required
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">Password</label>
-        <input
-          type="password"
-          className="form-control"
-          placeholder="Create a password"
-          required
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
-        />
-      </div>
-      <button type="submit" className="btn btn-success w-100">
-        Create Account
-      </button>
+      {step === 1 && (
+        <div>
+          <div className="mb-3">
+            <label className="form-label">Name</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your name"
+              required
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Enter your email"
+              required
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              placeholder="Create a password"
+              required
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
+          </div>
+          <button
+            type="button"
+            className="btn btn-primary w-100"
+            onClick={nextStep}
+          >
+            Next Step
+          </button>
+        </div>
+      )}
+
+      {step === 2 && (
+        <div>
+          <h5 className="mb-3">Add People You Care About</h5>
+          <p className="text-muted">
+            We've already added you, because you matter, but besides you, who do
+            you care about? At least one other person is required.
+          </p>
+          <ul className="nav nav-tabs mb-3">
+            {form.people.map((person, index) => (
+              <li className="nav-item" key={index}>
+                <button
+                  type="button"
+                  className={`nav-link ${activeTab === index ? "active" : ""}`}
+                  onClick={() => handleTabClick(index)}
+                >
+                  {person.name.length > 0
+                    ? person.name
+                    : `Person #${index + 1}`}
+                </button>
+              </li>
+            ))}
+            <li className="nav-item">
+              <button
+                type="button"
+                className="nav-link text-success"
+                onClick={addNewPerson}
+              >
+                + Add Person
+              </button>
+            </li>
+          </ul>
+          <div className="mb-3">
+            <label className="form-label">
+              Person's Name (however you call them)
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter their name"
+              required
+              value={form.people[activeTab]?.name || ""}
+              onChange={(e) => {
+                const updatedPeople = [...form.people];
+                updatedPeople[activeTab] = {
+                  ...updatedPeople[activeTab],
+                  name: e.target.value,
+                };
+                setForm({ ...form, people: updatedPeople });
+              }}
+            />
+            <label className="form-label mt-2">
+              Relationship (ex. 'Brother', 'Friend')
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Enter your relationship"
+              required
+              value={form.people[activeTab]?.relationship || ""}
+              onChange={(e) => {
+                const updatedPeople = [...form.people];
+                updatedPeople[activeTab] = {
+                  ...updatedPeople[activeTab],
+                  relationship: e.target.value,
+                };
+                setForm({ ...form, people: updatedPeople });
+              }}
+            />
+          </div>
+          <div className="d-flex justify-content-between mt-3">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={prevStep}
+            >
+              Back
+            </button>
+            <button
+              type="submit"
+              className="btn btn-success"
+              disabled={!isAtLeastOnePersonValid || isSubmitting}
+            >
+              {isSubmitting ? "Creating Account..." : "Create Account"}
+            </button>
+          </div>
+        </div>
+      )}
     </form>
   );
 }

@@ -57,9 +57,15 @@ export default function UpcomingSpecialDaysInline() {
   const getDaysLeft = (dateStr: string) => {
     const today = new Date();
     const targetDate = new Date(dateStr);
-    return Math.ceil(
-      (targetDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
-    );
+    const diffTime = targetDate.getTime() - today.getTime();
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays > 31) {
+      const months = Math.round(diffDays / 30); // Round months to the nearest whole number
+      return `~${months} month${months > 1 ? "s" : ""}`;
+    }
+
+    return `${diffDays} day${diffDays === 1 ? "" : "s"}`;
   };
 
   const openGiftModal = async (day) => {
@@ -141,7 +147,7 @@ export default function UpcomingSpecialDaysInline() {
               return dayDate.getTime() > today.getTime();
             })
             .map((day) => {
-              const daysLeft = getDaysLeft(day.date);
+              const daysLeft = typeof getDaysLeft(day.date) === "string" ? parseInt(getDaysLeft(day.date)) : getDaysLeft(day.date);
               const urgencyClass = getUrgencyClass(daysLeft);
               const emoji = getEmoji(day.title);
 
@@ -156,15 +162,17 @@ export default function UpcomingSpecialDaysInline() {
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                     transition: "transform 0.2s, box-shadow 0.2s",
                   }}
-                  title={`${daysLeft} day${daysLeft === 1 ? "" : "s"} left`}
+                  title={`${daysLeft} left`}
                   onClick={() => openGiftModal(day)}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "scale(1.05)";
-                    e.currentTarget.style.boxShadow = "0 6px 10px rgba(0, 0, 0, 0.15)";
+                    e.currentTarget.style.boxShadow =
+                      "0 6px 10px rgba(0, 0, 0, 0.15)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "scale(1)";
-                    e.currentTarget.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.1)";
+                    e.currentTarget.style.boxShadow =
+                      "0 4px 6px rgba(0, 0, 0, 0.1)";
                   }}
                 >
                   <strong
@@ -189,6 +197,7 @@ export default function UpcomingSpecialDaysInline() {
                   >
                     {emoji} {day.title}
                   </span>
+
                   <small
                     className=""
                     style={{
@@ -202,6 +211,17 @@ export default function UpcomingSpecialDaysInline() {
                   >
                     {day.date.split("T")[0]}
                   </small>
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      color: "#000",
+                      marginTop: "4px",
+                      position: "absolute",
+                      bottom: "-14px",
+                    }}
+                  >
+                    {daysLeft} left
+                  </span>
                 </span>
               );
             })}
@@ -348,4 +368,11 @@ export default function UpcomingSpecialDaysInline() {
       `}</style>
     </div>
   );
+}
+
+export function getDaysLeft(date: Date): number {
+  const today = new Date();
+  const timeDiff = date.getTime() - today.getTime();
+  if (isNaN(timeDiff)) return 0; // Handle invalid dates
+  return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 }
