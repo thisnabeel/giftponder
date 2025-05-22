@@ -22,6 +22,7 @@ export default function UpcomingSpecialDayCalendar() {
   const [formData, setFormData] = useState({ personId: "", title: "" });
   const [selectedMonthOffset, setSelectedMonthOffset] = useState(0);
   const [activeButton, setActiveButton] = useState<string | null>(null);
+  const [showFullCalendar, setShowFullCalendar] = useState(true);
 
   const today = new Date();
 
@@ -85,6 +86,10 @@ export default function UpcomingSpecialDayCalendar() {
     setSpecialDays(res.data);
   };
 
+  const toggleCalendarView = () => {
+    setShowFullCalendar(!showFullCalendar);
+  };
+
   const monthStart = getFirstOfMonth(today, selectedMonthOffset);
   const days = getMonthDays(monthStart);
   const label = monthStart.toLocaleDateString(undefined, {
@@ -121,6 +126,12 @@ export default function UpcomingSpecialDayCalendar() {
             );
           })}
         </select>
+        <button
+          className="btn btn-outline-secondary ms-3"
+          onClick={toggleCalendarView}
+        >
+          {showFullCalendar ? "Show Special Days Only" : "Show Full Calendar"}
+        </button>
       </div>
 
       <div className="mb-5">
@@ -140,6 +151,8 @@ export default function UpcomingSpecialDayCalendar() {
             const dateStr = formatDate(date);
             const match = specialDays.find((s) => s.date.startsWith(dateStr));
 
+            if (!showFullCalendar && !match) return null;
+
             return (
               <div
                 key={idx}
@@ -151,7 +164,18 @@ export default function UpcomingSpecialDayCalendar() {
                   cursor: "pointer",
                 }}
               >
-                <div className="fw-bold">{date.getDate()}</div>
+                <div className="fw-bold">
+                  <span className="mobile-day">
+                    {date.toLocaleDateString(undefined, {
+                      weekday: "short",
+                    })}
+                    {", "}
+                    {date.toLocaleDateString(undefined, {
+                      month: "short",
+                    })}{" "}
+                  </span>
+                  {date.getDate()}
+                </div>
                 {match ? (
                   <div style={{ fontSize: "0.75rem" }}>
                     <div>{match.title}</div>
@@ -252,6 +276,9 @@ export default function UpcomingSpecialDayCalendar() {
       )}
 
       <style jsx>{`
+        .mobile-day {
+          display: none;
+        }
         .calendar-grid {
           display: grid;
           grid-template-columns: repeat(7, 1fr);
@@ -293,6 +320,36 @@ export default function UpcomingSpecialDayCalendar() {
           border-radius: 8px;
           max-width: 400px;
           width: 100%;
+        }
+
+        @media (max-width: 768px) {
+          .calendar-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          }
+          .calendar-cell {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.85rem;
+          }
+          .calendar-header {
+            display: none;
+          }
+          .calendar-cell .day-name {
+            font-weight: bold;
+            margin-right: 8px;
+          }
+          .calendar-cell.empty {
+            display: none;
+          }
+          .mobile-day {
+            display: inline;
+          }
         }
       `}</style>
     </div>

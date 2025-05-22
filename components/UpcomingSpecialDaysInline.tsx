@@ -145,6 +145,7 @@ export default function UpcomingSpecialDaysInline() {
                     minWidth: "180px",
                     position: "relative",
                     cursor: "pointer",
+                    marginBottom: "12px",
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                     transition: "transform 0.2s, box-shadow 0.2s",
                   }}
@@ -350,6 +351,16 @@ export default function UpcomingSpecialDaysInline() {
           border-radius: 8px;
           max-width: 500px;
           width: 100%;
+        }
+        @media (max-width: 768px) {
+          .d-flex.flex-wrap.gap-2 {
+            flex-direction: column;
+            align-items: center;
+          }
+          .badge {
+            min-width: 100%;
+            margin-bottom: 10px;
+          }
         }
       `}</style>
     </div>
