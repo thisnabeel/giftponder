@@ -433,13 +433,19 @@ function SignupForm() {
               </li>
             ))}
             <li className="nav-item">
-              <button
-                type="button"
-                className="nav-link text-success"
-                onClick={addNewPerson}
-              >
-                + Add Person
-              </button>
+              {form.people.every(
+                (person) =>
+                  person.name.trim() !== "" &&
+                  person.relationship.trim() !== ""
+              ) && (
+                <button
+                  type="button"
+                  className="nav-link text-success"
+                  onClick={addNewPerson}
+                >
+                  + Add Person
+                </button>
+              )}
             </li>
           </ul>
           <div className="mb-3">
