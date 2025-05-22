@@ -168,6 +168,7 @@ function SignupForm() {
   const [step, setStep] = useState(1);
   const [activeTab, setActiveTab] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
+  const [showInputField, setShowInputField] = useState(false); // Track custom title input field
 
   const isStepOneValid =
     form.name.trim() !== "" &&
@@ -203,6 +204,78 @@ function SignupForm() {
     setActiveTab(form.people.length); // Switch to the new tab
   };
 
+  const addNewSpecialDay = (personIndex: number) => {
+    const newSpecialDay = { title: "", month: "", day: "" };
+    const updatedPeople = [...form.people];
+    if (!updatedPeople[personIndex].specialDays) {
+      updatedPeople[personIndex].specialDays = [];
+    }
+    updatedPeople[personIndex].specialDays.push(newSpecialDay);
+    setForm({ ...form, people: updatedPeople });
+  };
+
+  const updateSpecialDay = (
+    personIndex: number,
+    specialDayIndex: number,
+    field: "title" | "month" | "day",
+    value: string
+  ) => {
+    const updatedPeople = [...form.people];
+
+    // Ensure specialDays array exists and the index is valid
+    if (
+      updatedPeople[personIndex]?.specialDays &&
+      updatedPeople[personIndex].specialDays[specialDayIndex]
+    ) {
+      updatedPeople[personIndex].specialDays[specialDayIndex][field] = value;
+      setForm({ ...form, people: updatedPeople });
+    } else {
+      console.error(
+        "Invalid specialDayIndex or specialDays array is undefined"
+      );
+    }
+  };
+
+  const handleSpecialDayClick = (personIndex: number, title: string) => {
+    const updatedPeople = [...form.people];
+    const newSpecialDay = { title, month: "", day: "" };
+    if (!updatedPeople[personIndex].specialDays) {
+      updatedPeople[personIndex].specialDays = [];
+    }
+    updatedPeople[personIndex].specialDays.push(newSpecialDay);
+    setForm({ ...form, people: updatedPeople });
+  };
+
+  const removeSpecialDay = (personIndex: number, specialDayIndex: number) => {
+    const updatedPeople = [...form.people];
+    if (
+      updatedPeople[personIndex]?.specialDays &&
+      updatedPeople[personIndex].specialDays[specialDayIndex]
+    ) {
+      updatedPeople[personIndex].specialDays.splice(specialDayIndex, 1);
+      setForm({ ...form, people: updatedPeople });
+    } else {
+      console.error(
+        "Invalid specialDayIndex or specialDays array is undefined"
+      );
+    }
+  };
+
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true); // Disable form and indicate submission
@@ -230,12 +303,38 @@ function SignupForm() {
         // Create Person entries for the people the user cares about
         await Promise.all(
           form.people.map((person) => {
-            if (person.name.length > 0 && person.relationship.length > 0)
-              axios.post("/api/persons", {
-                name: person.name,
-                relationship: person.relationship,
-                userId: res.data.userId,
-              });
+            if (person.name.length > 0 && person.relationship.length > 0) {
+              return axios
+                .post("/api/persons", {
+                  name: person.name,
+                  relationship: person.relationship,
+                  userId: res.data.userId,
+                })
+                .then((personRes) => {
+                  if (person.specialDays?.length) {
+                    return Promise.all(
+                      person.specialDays.map((day) => {
+                        // Construct the date using the current year, month, and day
+                        const currentYear = new Date().getFullYear();
+                        const monthIndex = monthNames.indexOf(day.month);
+                        const date = new Date(
+                          currentYear,
+                          monthIndex,
+                          parseInt(day.day)
+                        );
+
+                        return axios.post(
+                          `/api/persons/${personRes.data.id}/special-days`,
+                          {
+                            title: day.title,
+                            date: date.toISOString(),
+                          }
+                        );
+                      })
+                    );
+                  }
+                });
+            }
           })
         );
 
@@ -254,6 +353,19 @@ function SignupForm() {
       setIsSubmitting(false); // Re-enable form on failure
     }
   };
+
+  const commonSpecialDayTitles = [
+    "Birthday",
+    "Anniversary",
+    "Father's Day",
+    "Mother's Day",
+    "Surgery",
+    "Graduation",
+    "Wedding",
+    "Baby Shower",
+    "Housewarming",
+    "Retirement",
+  ];
 
   return (
     <form onSubmit={handleSubmit}>
@@ -368,6 +480,79 @@ function SignupForm() {
               }}
             />
           </div>
+          <h6 className="mt-3">Special Days</h6>
+          {form.people[activeTab]?.specialDays?.map((day, dayIndex) => (
+            <div key={dayIndex} className="mb-2">
+              <input
+                type="text"
+                className="form-control mb-1"
+                placeholder="Special Day Title"
+                value={day.title}
+                onChange={(e) =>
+                  updateSpecialDay(activeTab, dayIndex, "title", e.target.value)
+                }
+              />
+              <div className="d-flex align-items-center">
+                <select
+                  className="form-select me-2"
+                  value={day.month}
+                  onChange={(e) =>
+                    updateSpecialDay(
+                      activeTab,
+                      dayIndex,
+                      "month",
+                      e.target.value
+                    )
+                  }
+                  style={{ width: "50%" }}
+                >
+                  <option value="">Select Month</option>
+                  {monthNames.map((month, index) => (
+                    <option key={index} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  type="number"
+                  className="form-control me-2"
+                  placeholder="Day"
+                  value={day.day}
+                  onChange={(e) =>
+                    updateSpecialDay(activeTab, dayIndex, "day", e.target.value)
+                  }
+                  style={{ width: "50%" }}
+                />
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  onClick={() => removeSpecialDay(activeTab, dayIndex)}
+                >
+                  <i className="fa fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          ))}
+          <div className="special-day-titles-container">
+            <button
+              type="button" // Prevent form submission
+              className="btn btn-outline-secondary me-2"
+              onClick={() => handleSpecialDayClick(activeTab, "Custom Day...")}
+            >
+              <i className="fa fa-pen"></i> Custom
+            </button>
+
+            {commonSpecialDayTitles.map((title, index) => (
+              <button
+                type="button" // Prevent form submission
+                key={index}
+                className="btn btn-outline-secondary me-2"
+                onClick={() => handleSpecialDayClick(activeTab, title)}
+              >
+                {title}
+              </button>
+            ))}
+          </div>
           <div className="d-flex justify-content-between mt-3">
             <button
               type="button"
@@ -386,6 +571,18 @@ function SignupForm() {
           </div>
         </div>
       )}
+      <style jsx>{`
+        .special-day-titles-container {
+          display: flex;
+          overflow-x: auto;
+          white-space: nowrap;
+          padding: 10px 0;
+        }
+
+        .special-day-titles-container button {
+          flex-shrink: 0;
+        }
+      `}</style>
     </form>
   );
 }
