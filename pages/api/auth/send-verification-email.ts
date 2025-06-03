@@ -5,6 +5,22 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY!);
 
+// Keep track of last email sent time
+let lastEmailSentTime = 0;
+
+// Helper function to ensure rate limiting
+const enforceRateLimit = async () => {
+  const now = Date.now();
+  const timeSinceLastEmail = now - lastEmailSentTime;
+  if (timeSinceLastEmail < 500) {
+    // If less than 500ms has passed
+    await new Promise((resolve) =>
+      setTimeout(resolve, 500 - timeSinceLastEmail)
+    );
+  }
+  lastEmailSentTime = Date.now();
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -28,6 +44,9 @@ export default async function handler(
     });
 
     const verificationUrl = `${process.env.NEXTAUTH_URL || "https://www.giftponder.com"}/verify-email?code=${verificationCode}`;
+
+    // Enforce rate limit before sending email
+    await enforceRateLimit();
 
     await resend.emails.send({
       from: "GiftPonder <donotreply@giftponder.com>",
