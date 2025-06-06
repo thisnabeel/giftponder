@@ -23,7 +23,7 @@ export default async function handler(
   const subject =
     names.length > 0
       ? `🎁 Days upcoming for ${subjectNames}`
-      : "🎁 Your GiftPonder Newsletter";
+      : "🎁 Note from GiftPonder";
 
   const result = await resend.emails.send({
     from: "GiftPonder <donotreply@giftponder.com>",

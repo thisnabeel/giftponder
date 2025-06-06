@@ -60,8 +60,65 @@ export async function createGiftNewsletter(
   const upcoming = await getUpcomingSpecialDays(userId);
 
   if (!upcoming.length) {
+    const noSpecialDaysMessage = `
+      <div style="text-align: center; padding: 20px 0;">
+        <h2 style="color: #333; font-size: 24px; margin-bottom: 15px;">
+          🌟 Daily GiftPonder Note
+        </h2>
+        
+        <p style="font-size: 18px; color: #666; margin-bottom: 25px;">
+          You don't have any special dates coming up in the next 60 days — yet!
+        </p>
+        
+        <div style="
+          background-color: #f9f9f9;
+          border-radius: 12px;
+          padding: 25px;
+          margin: 20px 0;
+          text-align: left;
+          font-size: 16px;
+          line-height: 1.6;
+          color: #555;
+        ">
+          <p>
+            That's perfectly okay. Well sort of... Here's something to think about:
+          </p>
+          
+          <p>
+            Psychologists have found that anticipating meaningful moments — even small ones — boosts happiness, deepens relationships, and gives us something positive to look forward to. Without these "emotional anchors," we can drift into routines and unintentionally miss moments that matter to those we care about.
+          </p>
+        </div>
+        
+        <div style="
+          font-style: italic;
+          margin: 30px 0;
+          padding: 20px;
+          border-left: 4px solid #e0e0e0;
+          background-color: #fafafa;
+          border-radius: 0 8px 8px 0;
+        ">
+          <p style="color: #666; font-size: 17px; margin: 0;">
+            "The best time to plant a tree was 20 years ago. The second best time is now."
+            <br/>
+            <span style="font-size: 15px;">— Chinese Proverb 🌳</span>
+          </p>
+        </div>
+        
+        <p style="
+          font-size: 16px;
+          color: #666;
+          background-color: #f0f7ff;
+          padding: 20px;
+          border-radius: 8px;
+          margin-top: 25px;
+        ">
+          Take a minute today to add a birthday, anniversary, or milestone. Your future self (and your loved ones) will thank you.
+        </p>
+      </div>
+    `;
+
     return {
-      html: `<p>No upcoming special days found for this user.</p>`,
+      html: wrapInBeautifulEmail(noSpecialDaysMessage, false),
       names: [],
     };
   }
@@ -158,7 +215,14 @@ function markdownToHtml(md: string): string {
     .replace(/\n/g, "<br/>");
 }
 
-function wrapInBeautifulEmail(bodyHtml: string): string {
+function wrapInBeautifulEmail(
+  bodyHtml: string,
+  hasUpcomingDays: boolean = true
+): string {
+  const preheaderText = hasUpcomingDays
+    ? "Review your upcoming special days!"
+    : "No Special Days Coming Up? Make sure!";
+
   return `
   <div style="
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
@@ -167,6 +231,14 @@ function wrapInBeautifulEmail(bodyHtml: string): string {
     padding: 30px;
     color: #333;
   ">
+    <!-- Preheader text - hidden but shown in email clients -->
+    <div style="display: none; max-height: 0px; overflow: hidden;">
+      ${preheaderText}
+      <!-- Add some extra spaces to ensure the preheader text doesn't get cut off -->
+      &nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌&nbsp;‌
+    </div>
+    <!-- End preheader -->
+
     <div style="
       max-width: 600px;
       margin: 0 auto;

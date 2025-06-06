@@ -27,7 +27,7 @@ export default async function handler(
       const subject =
         names.length > 0
           ? `🎁 Days upcoming for ${names.join(", ")}`
-          : "🎁 Your GiftPonder Newsletter";
+          : "🎁 Note from GiftPonder";
 
       const emailRes = await resend.emails.send({
         from: "GiftPonder <donotreply@giftponder.com>",
